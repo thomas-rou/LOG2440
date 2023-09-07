@@ -1,0 +1,76 @@
+:root {
+    --main-bg: black;
+    --main-color: white;
+    --secondary-bg: #37393a;
+    --container-bg: #262626;
+    --highlight-color: #E50914;
+    --call-to-action: aqua;
+    --positive-correspondance: green;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    color: var(--main-color);
+    background-color: var(--secondary-bg);
+}
+
+input[type=text] {
+    padding: 5px 3px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+}
+
+footer {
+    background-color: var(--main-bg);
+}
+
+.search-button {
+    padding: 5px 10px;
+    background: none;
+    color: var(--main-color);
+    border: none;
+    /* TODO : modifier le curseur */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.movie-container {
+    /* TODO : compléter le CSS */
+    display: block;
+    margin: 0 auto;
+}
+
+.about-description {
+    display: flex;
+    justify-content: center;
+}
+
+section>p>a {
+    color: var(--call-to-action);
+    text-decoration: none;
+}
+
+fieldset
+input[type="text"],
+input[type="date"],
+input[type="number"]
+{
+    margin: 0px 0px 0px 5px;
+    padding: 0.4rem 0.8rem 0.4rem 0.8rem;
+    border-radius:  5px;
+    border-style: none;
+}
+
+input[type="submit"]{
+    border-radius: 5px;
+    border-style: none;
+    padding: 20px;
+}
