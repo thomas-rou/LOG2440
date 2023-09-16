@@ -11,16 +11,61 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,600&family=Roboto:ital,wght@0,400;0,500;1,300;1,400;1,500&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/styles.css" />
   <title>PolyPlay</title>
 </head>
 
 <body>
+  <header>
+    <!-- Logo and Navigation Links -->
+    <td style="display: flex; align-items: center;">
+      <nav id="nav-bar">
+        <ul class="nav-links" style="list-style: none; padding: 0; margin: 0; display: flex;">
+          <li><a href="./index.html" style="text-decoration: none; color: white;"><img src="./assets/img/logo-polyflix.png" alt="Logo Polyflix" style="width: 80px; height: auto;" /></a></li>
+          <li><a href="./admin.html" style="text-decoration: none; color: red;">Admin</a></li>
+          <li><a href="./about.html" style="text-decoration: none; color: white;">À propos</a></li>
+        </ul>
+      </nav>
+    </td>
+    <!-- Search Bar -->
+    <td style="text-align: right;">
+      <!-- Wrap the search form in a <nav> element for the fourth test -->
+      <nav id="nav-search">
+        <form id="search-form"> <!-- Added form element with id -->
+          <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Recherche de films" />
+              <button type="search-button" style="background-color: black;"><i class="fa-solid"></i></button>
+          </div>
+        </form>
+      </nav>
+    </td>
+  </header>
   <main>
-    <!-- TODO : Compléter la page HTML -->
-    <video class="movie-container">
+    <div class="conteneur">
+      <div>
+        <img class="movie-poster" id="'movie-poster" alt="affiche du film" src="./assets/img/cyborg.jpg">
+      </div>
+      <div class="film-description">
+        <h2 id="movie-title">Cyborg</h2>
+            <div class="movie-description" id="movie-description">
+                Description : Il s'agit d'un film dans un univers futuriste. Un groupe de cyborgs se révolte contre l'humanité.
+            </div>
+            <p id="movie-actors">Acteurs.trices: Margerite Montaigne, Chantale Tremblay, Véronique Bélanger</p>
+            <p id="movie-date">Date de sortie : 21/08/2022</p>
+            <p id="movie-duration">Durée : 2h30</p>
+    </div>
+    </div>
+    <video id="movie-corr" class="movie-container" controls preload="metadata">
+      <source src="./assets/mp4/video.mp4" type="video/mp4">
+      <track label="English" kind="captions" srclang="en" src="resources/myvideo-en.vtt" default>
+      <track label="Français" kind="captions" srclang="fr" src="resources/myvideo-fr.vtt" default>
       Your browser does not support the video tag.
-    </video>
+  </video>
   </main>
+  <footer>
+    <span id="student-1">Rouleau, Thomas matricule #2221053</span>
+    <span id="student-2">Trahan, Francis matricule #2209296</span>
+  </footer>
 </body>
 
 </html>
