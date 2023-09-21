@@ -34,7 +34,7 @@
         <form id="search-form"> <!-- Added form element with id -->
           <div class="search-bar">
             <input type="text" id="search-input" placeholder="Recherche de films" />
-              <button type="search-button" style="background-color: black;"><i class="fa-solid"></i></button>
+              <button type="search-button" style="background-color: black; color: white; border: none;"><i class="fa-solid fa-search"></i></button>
           </div>
         </form>
       </nav>
@@ -49,22 +49,12 @@
       <legend>Informations générales</legend>
       <!-- Titre -->
       <label for="name">Nom du film: </label>
-      <input type="text" id="name" name="name" required pattern="[^ ]+">
+      <input type="text" id="name" required pattern=".*\S+.*">
       <br><br>
 
       <!-- Description -->
       <label for="description">Description: </label>
-      <input id="description" name="description" required>
-      <br><br>
-
-      <!-- Affiche -->
-      <label for="image">Image: </label>
-      <input type="file" id="image" name="image" accept="image/*" required>
-      <br><br>
-
-      <!-- Film -->
-      <label for="video">Vidéo: </label>
-      <input type="file" id="video" name="video" accept="video/*" required>
+      <input type="text" id="description" minlength="10" required>
       <br><br>
 
       <!-- Durée -->
@@ -77,10 +67,20 @@
       <input type="date" id="release-date" name="release-date" required>
       <br><br>
 
+      <!-- Affiche -->
+      <label for="image">Image: </label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+      <br><br>
+
+      <!-- Film -->
+      <label for="video">Vidéo: </label>
+      <input type="file" id="video" name="video" accept="video/*" required>
+      <br><br>
+
       <!-- Liste Acteurs.rices -->
       <div>
         <label for="actor-input">Act.eurs.rices: </label>
-        <input list="actors-datalist" id="actor-input" type="select" required>
+        <input list="actors-datalist" id="actor-input" type="select">
         <button class="fa fa-plus" id="add-cast-button"></button>
       </div>
       <datalist id="actors-datalist">
@@ -96,10 +96,10 @@
     <div>
       <img class="movie-poster" id="img-preview" alt="image par défaut pour la prévisualisation" src="./assets/img/piano.jpg">
     </div>
+    <!-- Ajout du film -->
     <div class="ligne-conteneur">
-      <!-- Ajout du film -->
       <div class="submit">
-        <input type="submit" value="Ajouter le film">
+        <input type="submit" value="Ajouter le film" >
       </div>
     </div>
   </form>
