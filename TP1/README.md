@@ -1,4 +1,3 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/qYBYgSyE)
 # TP1
 
 Le but de ce travail pratique est de vous familiariser avec **HTML** et **CSS**. Vous allez élaborer la structure de pages web en utilisant HTML, mettre en place l’interaction entre les différentes pages à l’aide des hyperliens et vous aurez à reproduire les maquettes des différentes pages du site web qui vous sont fournies ici. Vous pourrez aussi vous familiariser avec l’exécution de test de bout en bout avec la librairie Cypress.
