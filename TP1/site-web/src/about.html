@@ -17,9 +17,32 @@
 
 <body>
   <!-- TODO : ajouter l'entête -->
-  <a href="./index.html" id="logo-container">
-    <img alt="logo" src="assets/img/logo-polyflix.png" title="Accueil">
-  </a>
+  <header>
+    
+    <!-- Logo and Navigation Links -->
+    <td style="display: flex; align-items: center;">
+      <nav id="nav-bar">
+        <ul class="nav-links" style="list-style: none; padding: 0; margin: 0; display: flex;">
+          <li><a href="./index.html" style="text-decoration: none; color: white;"><img src="./assets/img/logo-polyflix.png" alt="Logo Polyflix" style="width: 80px; height: auto;" /></a></li>
+          <li><a href="./admin.html" style="text-decoration: none; color: red;">Admin</a></li>
+          <li><a href="./about.html" style="text-decoration: none; color: white;">À propos</a></li>
+        </ul>
+      </nav>
+    </td>
+    <!-- Search Bar -->
+    <td style="text-align: right;">
+      <!-- Wrap the search form in a <nav> element for the fourth test -->
+      <nav id="nav-search">
+        <form id="search-form"> <!-- Added form element with id -->
+          <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Recherche de films" />
+              <button type="search-button" style="background-color: black;"><i class="fa-solid"></i></button>
+          </div>
+        </form>
+      </nav>
+    </td>
+  </header>
+  <main>
 
   <main class="about-description">
     <section>
@@ -37,8 +60,8 @@
   </main>
   <footer>
     <!-- TODO : completer le bas de page -->
-    <span>Nom, Prénom matricule #1</span>
-    <span>Nom, Prénom matricule #2</span>
+    <span id="student-1">Rouleau, Thomas matricule #2221053</span>
+    <span id="student-2">Trahan, Francis matricule #2209296</span>
   </footer>
 </body>
 

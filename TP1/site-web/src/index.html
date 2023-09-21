@@ -11,13 +11,118 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,600&family=Roboto:ital,wght@0,400;0,500;1,300;1,400;1,500&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/styles.css" />
   <title>PolyPlay</title>
 </head>
 
 <body>
+  <header>
+    <!-- Logo and Navigation Links -->
+    <td style="display: flex; align-items: center;">
+      <nav id="nav-bar">
+        <ul class="nav-links" style="list-style: none; padding: 0; margin: 0; display: flex;">
+          <li><a href="./index.html" style="text-decoration: none; color: white;"><img src="./assets/img/logo-polyflix.png" alt="Logo Polyflix" style="width: 80px; height: auto;" /></a></li>
+          <li><a href="./admin.html" style="text-decoration: none; color: red;">Admin</a></li>
+          <li><a href="./about.html" style="text-decoration: none; color: white;">À propos</a></li>
+        </ul>
+      </nav>
+    </td>
+    <!-- Search Bar -->
+    <td style="text-align: right;">
+      <!-- Wrap the search form in a <nav> element for the fourth test -->
+      <nav id="nav-search">
+        <form id="search-form"> <!-- Added form element with id -->
+          <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Recherche de films" />
+              <button type="search-button" style="background-color: black;"><i class="fa-solid"></i></button>
+          </div>
+        </form>
+      </nav>
+    </td>
+  </header>
+
+
+
   <main>
+    
     <h2>Nouveautés <i class="fa-solid fa-film"></i></h2>
     <!-- TODO : Compléter la page HTML -->
+    <div class="posters-container">
+      <!-- Film 1 -->
+      
+      <div class="poster-container">
+        <a href="movie.html" id="movie-1">
+          <img class="movie-poster" src="./assets/img/desert.jpg" alt="Affiche du film Voyage dans le désert">
+          <div class="movie-hover-content">
+              <h3>Voyage dans le désert</h3>
+              <i class="fa fa-5x fa-play"></i>
+          </div>
+        </a> 
+        </div>
+
+        <div class="poster-container">
+          <a href="movie.html" id="movie-2">
+          <img class="movie-poster" src="./assets/img/cyborg.jpg" alt="Affiche du film Cyborg">
+          <div class="movie-hover-content">
+              <h3>Cyborg</h3>
+              <i class="fa fa-5x fa-play"></i>
+          </div>
+        </a> 
+        </div>
+
+        
+        <div class="poster-container">
+          <a href="movie.html" id="movie-3">
+          <img class="movie-poster" src="./assets/img/noir.jpg" alt="Affiche du film Les bons vieux jours 2">
+          <div class="movie-hover-content">
+              <h3>Les bons vieux jours 2</h3>
+              <i class="fa fa-5x fa-play"></i>
+          </div>
+        </a>
+        </div>
+      
+        </div>
+
+    <h2>Vos recommandations <i class="fa-solid fa-heart"></i></h2>
+    <div class="posters-container">
+
+    
+        <div class="poster-container">
+          <a href="movie.html" id="movie-4">
+          <img class="movie-poster" src="./assets/img/piano.jpg" alt="Affiche du film Le piano de l'aveugle">
+          <div class="movie-hover-content">
+              <h3>Le piano de l'aveugle</h3>
+              <i class="fa fa-5x fa-play"></i>
+          </div>
+          </a>
+        </div>  
+
+        <div class="poster-container" id="movie-5">
+          <a href="movie.html">
+          <img class="movie-poster" src="./assets/img/arizona.jpg" alt="Affiche du film Arizona">
+          <div class="movie-hover-content">
+              <h3>Arizona</h3>
+              <i class="fa fa-5x fa-play"></i>
+          </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    </main>
+    <footer>
+      <!-- TODO : completer le bas de page -->
+      <span id="student-1">Rouleau, Thomas matricule #2221053</span>
+      <span id="student-2">Trahan, Francis matricule #2209296</span>
+    </footer>
+  </body>
   </main>
 </body>
 
