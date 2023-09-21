@@ -44,7 +44,8 @@ footer {
     display:flex;
     background-color: var(--main-bg);
     text-align: center;
-    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     gap: 5px;
     bottom: 0px;
@@ -135,7 +136,7 @@ input[type="submit"]{
 
 .poster-container {
     position: relative;
-    width: 300px; 
+    width: 300px;
     height: 240px;
     overflow: hidden;
     transition: width 0.3s, height 0.3s; /* transition pour une croissance fluide */
@@ -202,4 +203,8 @@ input[type="submit"]{
     display: block;
     margin: 0 auto;
     max-width: 80%;
+}
+
+.nav-links li {
+    margin-right: 10px;
 }
