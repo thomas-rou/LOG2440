@@ -30,6 +30,9 @@ input[type=text] {
     box-sizing: border-box;
 }
 
+
+/* Classes pour Header */
+
 header {
     background-color: var(--main-bg);
     display: flex;
@@ -39,6 +42,23 @@ header {
     width: 100%;
     position: relative;
 }
+
+.search-button {
+    padding: 5px 10px;
+    background: none;
+    color: var(--main-color);
+    border: none;
+    /* TODO : modifier le curseur */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.nav-links li {
+    margin-right: 10px;
+}
+
+
+/*Classe pour footer*/
 
 footer {
     display:flex;
@@ -53,23 +73,7 @@ footer {
     height: 50px;
 }
 
-.search-button {
-    padding: 5px 10px;
-    background: none;
-    color: var(--main-color);
-    border: none;
-    /* TODO : modifier le curseur */
-    border-radius: 5px;
-    font-size: 16px;
-}
-.conteneur {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    place-items: center;
-    padding: 20px;
-}
-
+/*Classes pour admin.html */
 .ligne-conteneur{
     grid-column: 1 / span 2;
     padding: 20px;
@@ -120,13 +124,9 @@ input[type="submit"]{
     width: 100%;
     height: 200px;
 }
-.movie-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-    gap: 20px;
-}
 
+
+/* Classes css pour la page index.html */
 .posters-container {
     background-color: var(--container-bg);
     display: flex;
@@ -139,13 +139,13 @@ input[type="submit"]{
     width: 300px;
     height: 240px;
     overflow: hidden;
-    transition: width 0.3s, height 0.3s; /* transition pour une croissance fluide */
-}
+    transition: width 0.3s, height 0.3s; /* pour fluidité */
+} 
 
-.movie-poster {
+.movie-poster-index {
     width: 300px;
     height: 240px;
-    transition: width 0.3s, height 0.3s; /* transition pour un agrandissement fluide */
+    transition: width 0.3s, height 0.3s; /* pour fluidité */
 }
 
 .movie-hover-content {
@@ -163,10 +163,10 @@ input[type="submit"]{
 
 .poster-container:hover {
     width: 330px;
-    height: 264px; /* Maintient le ratio 5:4 */
+    height: 264px;
 }
 
-.poster-container:hover .movie-poster {
+.poster-container:hover .movie-poster-index {
     width: 330px;
     height: 264px;
 }
@@ -181,6 +181,37 @@ input[type="submit"]{
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+/* Classes pour la page movie.html */
+
+.movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 20px;
+    width: 50%;
+    height: 400px;
+    margin: 0 auto;
+    max-width: 80%;
+}
+.conteneur {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+    padding: 20px;
+}
+.movie-description {
+    max-width: 600px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-description:hover {
+    max-width: none;
+}
+
 .movie-poster{
     display: flex;
     justify-content: center;
@@ -193,18 +224,4 @@ input[type="submit"]{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.movie-description:hover {
-    max-width: none;
-}
-
-.movie-container {
-    display: block;
-    margin: 0 auto;
-    max-width: 80%;
-}
-
-.nav-links li {
-    margin-right: 10px;
 }
