@@ -18,21 +18,21 @@
 <body>
   <header>
     <td style="display: flex; align-items: center;">
-      <nav id="nav-bar">
-        <ul class="nav-links" style="list-style: none; padding: 0; margin: 0; display: flex;">
-          <li><a href="./index.html" style="text-decoration: none; color: white;"><img src="./assets/img/logo-polyflix.png" alt="Logo Polyflix" style="width: 80px; height: auto;" /></a></li>
-          <li><a href="./admin.html" style="text-decoration: none; color: red;">Admin</a></li>
-          <li><a href="./about.html" style="text-decoration: none; color: white;">À propos</a></li>
+      <nav id="nav-bar" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./index.html"><img class="header-logo" src="./assets/img/logo-polyflix.png" alt="Logo Polyflix"/></a></li>
+          <li><a href="./admin.html" class="current-page">Admin</a></li>
+          <li><a href="./about.html" class="other-pages">À propos</a></li>
         </ul>
       </nav>
     </td>
 
     <td style="text-align: right;">
-      <nav id="nav-search">
+      <nav id="nav-search" aria-label="Search Navigation">
         <form id="search-form">
           <div class="search-bar">
             <input type="text" id="search-input" placeholder="Recherche de films" />
-              <button type="search-button" style="background-color: black; color: white; border: none;"><i class="fa-solid fa-search"></i></button>
+              <button class="search-button" type="search-button"><i class="fa-solid fa-search"></i></button>
           </div>
         </form>
       </nav>
@@ -40,19 +40,19 @@
   </header>
 
   <main>
-    <div class="conteneur">
+    <div class="admin-container">
     <div>
-    <form id="movie-form" enctype="multipart/form-data">
+    <form id="movie-form" enctype="multipart/form-data" method="post" action="/site-web/src/movie.html">
       <fieldset>
       <legend>Informations générales</legend>
       <!-- Titre -->
       <label for="name">Nom du film: </label>
-      <input type="text" id="name" required pattern=".*\S+.*">
+      <input type="text" id="name" name="title" required pattern=".*\S+.*">
       <br><br>
 
       <!-- Description -->
       <label for="description">Description: </label>
-      <input type="text" id="description" minlength="10" required>
+      <input type="text" id="description" name="Description" minlength="10" required>
       <br><br>
 
       <!-- Durée -->
@@ -95,7 +95,7 @@
       <img class="movie-poster" id="img-preview" alt="image par défaut pour la prévisualisation" src="./assets/img/piano.jpg">
     </div>
     <!-- Ajout du film -->
-    <div class="ligne-conteneur">
+    <div class="line-container">
       <div class="submit">
         <input type="submit" value="Ajouter le film" >
       </div>

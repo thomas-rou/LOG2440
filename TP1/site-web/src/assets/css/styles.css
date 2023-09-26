@@ -34,29 +34,60 @@ input[type=text] {
 /* Classes pour Header */
 
 header {
-    background-color: var(--main-bg);
     display: flex;
+    flex-wrap: wrap;
+    background-color: var(--main-bg);
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    width: 100%;
+    padding: 10px 10px;
     position: relative;
+    margin: 0 auto;
 }
 
 .search-button {
     padding: 5px 10px;
     background: none;
     color: var(--main-color);
+    color: white;
     border: none;
-    /* TODO : modifier le curseur */
     border-radius: 5px;
     font-size: 16px;
+    cursor: pointer;
+}
+
+.header-logo {
+    width: 100px;
+    height: auto;
+}
+
+.nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
 }
 
 .nav-links li {
-    margin-right: 10px;
+    margin-right: 50px;
 }
 
+.current-page {
+    color: var(--highlight-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.other-pages {
+    color: var(--main-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.current-page:hover,
+.other-pages:hover {
+  text-decoration: underline;
+}
 
 /*Classe pour footer*/
 
@@ -74,7 +105,15 @@ footer {
 }
 
 /*Classes pour admin.html */
-.ligne-conteneur{
+.admin-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+    padding: 20px;
+}
+
+.line-container {
     grid-column: 1 / span 2;
     padding: 20px;
 }
@@ -136,43 +175,53 @@ input[type="submit"]{
 
 .poster-container {
     position: relative;
-    width: 300px;
-    height: 240px;
+    display: inline-block;
+    justify-content: center;
+    width: 240px;
+    height: 300px;
     overflow: hidden;
-    transition: width 0.3s, height 0.3s; /* pour fluidité */
-} 
+    margin: 10px;
+    transition: width 0.3s, height 0.3s;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+}
 
 .movie-poster-index {
-    width: 300px;
-    height: 240px;
-    transition: width 0.3s, height 0.3s; /* pour fluidité */
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    transition: width 0.3s, height 0.3s;
 }
 
 .movie-hover-content {
     position: absolute;
     top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
+    width: 240px;
+    height: 300px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     opacity: 0;
     transition: opacity 0.3s;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+.movie-hover-content > h3 {
+    text-align: center;
+    margin: 10px;
 }
 
 .poster-container:hover {
-    width: 330px;
-    height: 264px;
-}
-
-.poster-container:hover .movie-poster-index {
-    width: 330px;
-    height: 264px;
+    transform: scale(1.05);
 }
 
 .poster-container:hover .movie-hover-content {
     opacity: 1;
+    transform: scale(0.95);
 }
 
 @media (max-width: 800px) {
@@ -180,6 +229,10 @@ input[type="submit"]{
         display: grid;
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+main > h2 {
+    margin: 20px;
 }
 
 /* Classes pour la page movie.html */
@@ -194,15 +247,23 @@ input[type="submit"]{
     margin: 0 auto;
     max-width: 80%;
 }
-.conteneur {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    place-items: center;
-    padding: 20px;
+
+.movie-description-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: 80%;
+    flex-direction: row;
+    justify-content: center;
 }
+
 .movie-description {
+    display: flex;
+    flex-direction: column;
     max-width: 600px;
+    padding-top: 30px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -212,16 +273,18 @@ input[type="submit"]{
     max-width: none;
 }
 
-.movie-poster{
-    display: flex;
-    justify-content: center;
-    width: 150px;
-    height: 100%;
+.movie-description > p {
+    margin: 10px;
 }
 
-.movie-description {
-    max-width: 600px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.movie-description > h1 {
+    margin: 10px;
+}
+
+.movie-poster{
+    display: flex;
+    width: 200px;
+    height: auto;
+    padding-right: 100px;
+    padding-top: 30px;
 }

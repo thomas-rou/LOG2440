@@ -18,21 +18,21 @@
 <body>
   <header>
     <td style="display: flex; align-items: center;">
-      <nav id="nav-bar">
-        <ul class="nav-links" style="list-style: none; padding: 0; margin: 0; display: flex;">
-          <li><a href="./index.html" style="text-decoration: none; color: white;"><img src="./assets/img/logo-polyflix.png" alt="Logo Polyflix" style="width: 80px; height: auto;" /></a></li>
-          <li><a href="./admin.html" style="text-decoration: none; color: red;">Admin</a></li>
-          <li><a href="./about.html" style="text-decoration: none; color: white;">À propos</a></li>
+      <nav id="nav-bar" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./index.html"><img class="header-logo" src="./assets/img/logo-polyflix.png" alt="Logo Polyflix"/></a></li>
+          <li><a href="./admin.html" class="other-pages">Admin</a></li>
+          <li><a href="./about.html" class="other-pages">À propos</a></li>
         </ul>
       </nav>
     </td>
-    
+
     <td style="text-align: right;">
-      <nav id="nav-search">
+      <nav id="nav-search" aria-label="Search Navigation">
         <form id="search-form">
           <div class="search-bar">
             <input type="text" id="search-input" placeholder="Recherche de films" />
-              <button type="search-button" style="background-color: black;"><i class="fa-solid"></i></button>
+            <button class="search-button" type="search-button"><i class="fa-solid fa-search"></i></button>
           </div>
         </form>
       </nav>
@@ -42,12 +42,12 @@
 
 
   <main>
-    
+
     <h2>Nouveautés <i class="fa-solid fa-film"></i></h2>
-    <!-- TODO : Compléter la page HTML -->
+
       <div class="posters-container">
-      
-        <!--on met chaque film dans une classe poster-container-->
+
+
         <div class="poster-container">
           <a href="movie.html" id="movie-1">
             <img class="movie-poster-index" src="./assets/img/desert.jpg" alt="Affiche du film Voyage dans le désert">
@@ -57,7 +57,7 @@
               </h3>
               <i class="fa fa-5x fa-play"></i>
             </div>
-          </a> 
+          </a>
         </div>
 
         <div class="poster-container">
@@ -69,10 +69,10 @@
               </h3>
               <i class="fa fa-5x fa-play"></i>
             </div>
-          </a> 
+          </a>
         </div>
 
-        
+
         <div class="poster-container">
           <a href="movie.html" id="movie-3">
           <img class="movie-poster-index" src="./assets/img/noir.jpg" alt="Affiche du film Les bons vieux jours 2">
@@ -84,14 +84,14 @@
             </div>
           </a>
         </div>
-      
+
       </div>
 
-    
+
     <h2>Vos recommandations <i class="fa-solid fa-heart"></i></h2>
       <div class="posters-container">
 
-    
+
         <div class="poster-container">
           <a href="movie.html" id="movie-4">
           <img class="movie-poster-index" src="./assets/img/piano.jpg" alt="Affiche du film Le piano de l'aveugle">
@@ -102,7 +102,7 @@
               <i class="fa fa-5x fa-play"></i>
             </div>
           </a>
-        </div>  
+        </div>
 
         <div class="poster-container" id="movie-5">
           <a href="movie.html">
@@ -120,7 +120,7 @@
   </main>
 
     <footer>
-      <!-- TODO : completer le bas de page -->
+
       <span id="student-1">Rouleau, Thomas matricule #2221053</span>
       <span id="student-2">Trahan, Francis matricule #2209296</span>
     </footer>
