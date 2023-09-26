@@ -42,17 +42,17 @@
   <main>
     <div class="admin-container">
     <div>
-    <form id="movie-form" enctype="multipart/form-data" method="post" action="/site-web/src/movie.html">
+    <form id="movie-form" enctype="multipart/form-data" method="get">
       <fieldset>
       <legend>Informations générales</legend>
       <!-- Titre -->
       <label for="name">Nom du film: </label>
-      <input type="text" id="name" name="title" required pattern=".*\S+.*">
+      <input type="text" id="name" required pattern=".*\S+.*">
       <br><br>
 
       <!-- Description -->
       <label for="description">Description: </label>
-      <input type="text" id="description" name="Description" minlength="10" required>
+      <input type="text" id="description" minlength="10" required>
       <br><br>
 
       <!-- Durée -->
