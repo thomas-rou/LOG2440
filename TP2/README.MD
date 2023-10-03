@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/Fg42a6IO)
 # TP2 PolyNotes
 
 Le but de ce travail est de vous introduire au langage de programmation JavaScript et la manipulation du DOM. Vous allez vous familiariser avec la syntaxe ES2015 de JavaScript et la gestion des événements dans une page web. Finalement, vous utiliserez un outil d'analyse statique pour le respect de conventions de programmation (_linter_): ESLint. Cet outil définit un ensemble de règles à suivre pour un code uniforme et standard.
