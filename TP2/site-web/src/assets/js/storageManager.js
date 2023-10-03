@@ -1,0 +1,80 @@
+import notes from './defaultData.js';
+
+/**
+ * @typedef {import('./utils.js').Note} Note
+ */
+
+export default class StorageManager {
+  STORAGE_KEY_NOTES = 'notes';
+
+  /**
+   * Fonction utilitaire pour remplir le storage avec des valeurs par défauts
+   * NOTE : CECI EST FOURNI POUR VOUS AIDER AVEC LE CODE DE DÉPART
+   * CETTE FONCTION NE DOIT PAS ÊTRE APPELÉE À LA REMISE FINALE
+   */
+  populate() {
+    if (!this.getNotes() || this.getNotes().length === 0) {
+      localStorage.setItem(this.STORAGE_KEY_NOTES, JSON.stringify(notes));
+    }
+  }
+
+  /**
+   * TODO : Récupère toutes les notes du Storage ou un tableau vide
+   * @returns {Array<Note>} les notes du storage
+   */
+  getNotes() {
+    return [];
+  }
+
+  /**
+   * TODO : Récupère une note en fonction de son ID
+   * @param {string} id identifiant de la note
+   * @returns {Note | undefined} la note si trouvée
+   */
+  getNoteById(id) {
+    return undefined;
+  }
+
+  /**
+   * TODO : Ajoute des notes au storage
+   * @param {Array<Note>} notesArray tableau de notes à ajouter
+   */
+  setNotes(notesArray) {
+  }
+
+  /**
+   * Ajoute une nouvelle note au Storage
+   * @param {Note} note note à ajouter
+   */
+  addNote(note) {
+  }
+
+  /**
+   * TODO : Supprime une note en fonction de son ID
+   * @param {string} id identifiant de la note
+   */
+  deleteNoteById(id) {
+  }
+
+  /**
+   * TODO : Supprime toutes les notes du storage
+   */
+  deleteAllNotes() {
+  }
+
+  /**
+   * TODO : Modifie une note en fonction de son ID
+   * @param {string} id identifiant de la note
+   * @param {string} content contenu de la note
+   * @param {string[]} tags étiquettes de la note
+   */
+  modifyNoteById(id, content, tags) {
+  }
+
+  /**
+   * TODO : Modifie l'état épinglé de la note en fonction de son ID
+   * @param {string} id identifiant de la note
+   */
+  pinById(id) {
+  }
+}
