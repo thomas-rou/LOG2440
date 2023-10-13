@@ -12,14 +12,18 @@ Quelques astuces :
 
 | **Exigences**                                     | **Note** | **Points** |
 | ------------------------------------------------- | :------: | :--------: |
-| Utilisation adéquate des éléments d’un formulaire |    0     |     2      |
-| Entête et Pied de page                            |    0     |     2      |
-| Page `index`                                      |    0     |     4      |
-| Page `movie`                                      |    0     |     4      |
-| Page `admin`                                      |    0     |     6      |
-| Qualité et clarté du code HTML et CSS             |    0     |     2      |
+| Utilisation adéquate des éléments d’un formulaire |    2     |     2      |
+| Entête et Pied de page                            |    2     |     2      |
+| Page `index`                                      |    4     |     4      |
+| Page `movie`                                      |    4     |     4      |
+| Page `admin`                                      |    5.5     |     6      |
+| Qualité et clarté du code HTML et CSS             |    1     |     2      |
 | Bonus                                             |    0     |     1      |
-| **Total**                                         |  **0**   |   **20**   |
+| **Total**                                         |  **18.5**   |   **20**   |
+
+- Style dans le HTML.
+- Éléments disjoints lors du rétrécissement de l'écran.
+- Excellent !
 
 
 **Note** : Des points peuvent être retirés pour une utilisation abusive de CSS dupliqué ou de règles inutiles.
