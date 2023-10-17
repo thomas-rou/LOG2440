@@ -23,7 +23,12 @@ export default class StorageManager {
    * @returns {Array<Note>} les notes du storage
    */
   getNotes() {
-    return [];
+    const notesJSON = localStorage.getItem('notes');
+    if (notesJSON) {
+      return JSON.parse(notesJSON);
+    } else {
+      return [];
+    }
   }
 
   /**
@@ -40,6 +45,7 @@ export default class StorageManager {
    * @param {Array<Note>} notesArray tableau de notes à ajouter
    */
   setNotes(notesArray) {
+    localStorage.setItem('notes', JSON.stringify(notesArray));
   }
 
   /**
@@ -47,6 +53,7 @@ export default class StorageManager {
    * @param {Note} note note à ajouter
    */
   addNote(note) {
+    localStorage.setItem('notes', note);
   }
 
   /**

@@ -7,7 +7,7 @@ window.onload = () => {
   const noteLibrary = new NoteLibrary(storageManager);
   const controller = new MainPageEventsController(noteLibrary);
 
-  // storageManager.populate(); // TODO : à retirer avant la remise finale
+  storageManager.populate(); // TODO : à retirer avant la remise finale
   const notes = storageManager.getNotes();
 
   noteLibrary.generateHTMLNotes(notes);
