@@ -111,7 +111,7 @@ export default class NoteLibrary {
         unpinnedNotesDiv.appendChild(noteDiv);
       }
     });    
-  }
+  } 
 
   /**
    * TODO : Met à jour les listes des notes affichées dans la page
@@ -153,7 +153,7 @@ sortNotesBy(order) {
     listElement.appendChild(noteDiv);
     this.updateListsInterface(listElement);
   }
-}
+
   /**
    * TODO : Supprime une note en fonction de son ID et met à jour la vue
    * @param {string} id identifiant de la note

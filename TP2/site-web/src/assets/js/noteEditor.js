@@ -1,4 +1,5 @@
 import StorageManager from './storageManager.js';
+import { removeAllChildren } from './utils.js';
 
 /**
  * @typedef {import('./utils.js').Note} Note
@@ -32,7 +33,7 @@ export default class NoteEditor {
     const editableNote = this.storageManager.getNoteById(noteId);
 
     const detailDiv = document.getElementById('note-content');
-    detailDiv.innerHTML = '';
+    removeAllChildren(detailDiv);
 
     if (!editableNote) {
       const errorMessage = document.createElement('h2');
@@ -61,7 +62,7 @@ export default class NoteEditor {
       const textTags = document.createElement('span');
       textTags.id = 'tags';
       textTags.contentEditable = true;
-      textTags.textContent = editableNote.tags;
+      textTags.textContent = editableNote.tags.join(', ');
       detailTags.appendChild(textTags);
       detailDiv.appendChild(detailTags);
 
@@ -125,12 +126,15 @@ export default class NoteEditor {
 function saveChangesByIdListener(noteEditor, storageManager) {
   const saveButton = document.getElementById('save-button');
   const contentElement = document.getElementById('noteContent');
+  const tagsElement = document.getElementById('tags');
 
   saveButton.addEventListener('click', () => {
     const noteId = noteEditor.getNoteIdFromURL();
     const modifiedContent = contentElement.value;
-    const modifiedTags = document.getElementById('tags').textContent;
-
+    const modifiedTags = tagsElement.textContent.split(',')
+    .map(tag => tag.trim())
+    .filter(tag => tag.length > 0)
+    .map(tag => ` ${tag}`);
     storageManager.modifyNoteById(noteId, modifiedContent, modifiedTags);
   });
 }

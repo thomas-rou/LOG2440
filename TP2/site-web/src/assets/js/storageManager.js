@@ -90,7 +90,6 @@ export default class StorageManager {
    * @param {string[]} tags étiquettes de la note
    */
   modifyNoteById(id, content, tags) {
-    //use get notes by id to get the note and then modify it in local storage
     const notes = this.getNotes();
     const updatedNotes = notes.map(note => {
       if (note.id === id) {
