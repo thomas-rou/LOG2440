@@ -171,7 +171,7 @@ if (newNote.pinned) {
       }
     });
   }
- 
+
   /**
    * TODO : Configure la gestion de la modale et formulaire de création
    */

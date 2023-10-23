@@ -82,7 +82,6 @@ export default class StorageManager {
     localStorage.removeItem('notes');
   }
 
-
   /**
    * TODO : Modifie une note en fonction de son ID
    * @param {string} id identifiant de la note
