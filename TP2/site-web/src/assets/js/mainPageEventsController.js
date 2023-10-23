@@ -49,7 +49,8 @@ export default class MainPageEventsController {
         this.noteLibrary.storageManager.addNote(newNote);
 
         // Utilisez createHTMLNote pour créer l'élément DOM pour la nouvelle note
-        const noteDiv = this.noteLibrary.createHTMLNote(newNote);
+        const notes = this.noteLibrary.storageManager.getNotes();
+        const noteDiv = this.noteLibrary.updateListsInterface(notes);
   /**     
         // Ajoute la nouvelle note à l'interface utilisateur
         if (newNote.pinned) {
@@ -113,22 +114,32 @@ if (newNote.pinned) {
     const deleteAllButton = document.getElementById('delete-all-button');
     deleteAllButton.addEventListener('click', () => {
         this.noteLibrary.deleteAll();
-
     });
   }
+
   detailsListener() {
     const detailsButtons = document.querySelectorAll('.details-button');
     
     detailsButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const noteDiv = e.currentTarget.closest('.note');
-            const noteId = noteDiv.getAttribute('id');
-
-            // Assuming you want to redirect to a page called 'detail.html' with the note ID
-            window.location.href = `detail.html?id=${noteId}`;
+            const note = this.noteLibrary.storageManager.getNoteById(e.target.parentElement.getAttribute('data-id'));
+            window.location.href = 'detail.html?id=' + note.id;
         });
     });
-}
+  }
+
+  deleteListener() {
+    // const deleteButtons = document.querySelectorAll('.delete-button');
+    
+    // deleteButtons.forEach(button => {
+    //     button.addEventListener('click', (e) => {
+    //         const note = this.noteLibrary.storageManager.getNoteById(e.target.parentElement.getAttribute('data-id'));
+    //         console.log(note.id);
+    //         this.noteLibrary.deleteNote(note.id);
+    //     });
+    // });
+  }
+
   /**
    * TODO : Gère les événements de clavier pour les raccourcis "P" et "Delete"
    * Les événements sont ignorés s'il n'y a pas de note sélectionnée
@@ -137,11 +148,30 @@ if (newNote.pinned) {
     document.addEventListener('keydown', (event) => {
       if (event.key === 'P') {
         // Logique pour épingler/désépingler une note
+        const notes = document.querySelectorAll('.note');
+        notes.forEach(note => {
+          const hiddenElement = note.querySelector('.details-button.hidden');
+          if (!hiddenElement) {
+            const noteId = note.getAttribute('data-id');
+            this.noteLibrary.storageManager.pinById(noteId);
+            this.noteLibrary.updateListsInterface(this.noteLibrary.storageManager.getNotes());
+          }
+        });          
       } else if (event.key === 'Delete') {
         // Logique pour supprimer une note
+        const notes = document.querySelectorAll('.delete-button.note');
+        notes.forEach(note => {
+          const hiddenElement = note.querySelector('.hidden');
+          if (!hiddenElement) {
+            const noteId = note.getAttribute('data-id');
+            this.noteLibrary.storageManager.deleteNoteById(noteId);
+            this.noteLibrary.updateListsInterface(this.noteLibrary.storageManager.getNotes());
+          }
+        });
       }
     });
   }
+ 
   /**
    * TODO : Configure la gestion de la modale et formulaire de création
    */
@@ -157,5 +187,6 @@ if (newNote.pinned) {
     this.deleteAllListener();
     this.sortListener();
     this.detailsListener();
+    // this.deleteListener();
   }
 }

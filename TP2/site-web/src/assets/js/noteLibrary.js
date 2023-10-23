@@ -69,17 +69,6 @@ export default class NoteLibrary {
     detailsIcon.classList.add('details-button', 'fa', 'fa-info', 'hidden');
     noteDiv.appendChild(detailsIcon);
 
-    // add click event for delete icon
-    deleteIcon.addEventListener('click', () => {
-      this.deleteNote(note.id);
-      noteDiv.remove();
-    });
-
-    // add click event for details icon
-    detailsIcon.addEventListener('click', () => {
-      window.location.href = 'detail.html?id=' + note.id;
-    });
-
     // add global click event
     noteDiv.addEventListener('click', () => {
       this.selectNote({
@@ -130,7 +119,7 @@ export default class NoteLibrary {
    */
   updateListsInterface(notes) {
     this.generateHTMLNotes(notes);
-}
+  }
 
 /**
  * Trie les notes selon l'option sélectionnée (du plus récent au plus ancien ou l'inverse).
@@ -171,14 +160,8 @@ sortNotesBy(order) {
    */
   deleteNote(id) {
     this.storageManager.deleteNoteById(id);
-    
-    // Trouver l'élément de la note sur la page et le supprimer
-    const noteDiv = document.querySelector(`[data-id="${id}"]`);
-    if (noteDiv) { 
-        noteDiv.remove(); 
-    } else {
-        console.warn(`Note with ID ${id} was not found on the page.`);
-    }
+    const notes = this.storageManager.getNotes();
+    this.updateListsInterface(notes);
 }
 
 
@@ -187,32 +170,17 @@ sortNotesBy(order) {
    * @param {string} id identifiant de la note
    */
   pinNote(id) {
-    const note = this.storageManager.getNoteById(id);
-    if (note) {
-        // Basculer l'état "épinglé"
-        note.pinned = !note.pinned;
-        this.storageManager.updateNote(id, note);
-        
-        // Mettre à jour la vue
-        const noteDiv = document.querySelector(`[data-id="${id}"]`);
-        if (noteDiv) {
-            if (note.pinned) {
-                this.pinnedNoteList.appendChild(noteDiv);
-            } else {
-                this.noteList.appendChild(noteDiv);
-            }
-        }
-    }
+    this.storageManager.pinById(noteId);
+    const notes = this.storageManager.getNotes();
+    this.updateListsInterface(notes);
 }
 
   /**
    * TODO : Supprime toutes les notes du site et met à jour la vue
    */
   deleteAll() {
-
-            this.storageManager.deleteAllNotes();
-            const notes = document.querySelectorAll('.note');
-            notes.forEach(note => note.remove());
-
-}
+    this.storageManager.deleteAllNotes();
+    const notes = this.storageManager.getNotes();
+    this.updateListsInterface(notes);
+  }
 }
