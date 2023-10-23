@@ -55,7 +55,9 @@ export default class StorageManager {
    * @param {Note} note note à ajouter
    */
   addNote(note) {
-    localStorage.setItem('notes', note);
+    const notes = this.getNotes();
+    notes.push(note);
+    this.setNotes(notes);
   }
 
   /**
@@ -109,7 +111,6 @@ export default class StorageManager {
    * @param {string} id identifiant de la note
    */
   pinById(id) {
-    // change the pinned status of the note indicated by the id and update the information in local storage
     const notes = this.getNotes();
     const updatedNotes = notes.map(note => {
       if (note.id === id) {
