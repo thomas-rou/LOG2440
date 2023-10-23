@@ -49,31 +49,24 @@ export default class MainPageEventsController {
         this.noteLibrary.storageManager.addNote(newNote);
 
         // Utilisez createHTMLNote pour créer l'élément DOM pour la nouvelle note
-        const notes = this.noteLibrary.storageManager.getNotes();
-        const noteDiv = this.noteLibrary.updateListsInterface(notes);
-  /**     
-        // Ajoute la nouvelle note à l'interface utilisateur
-        if (newNote.pinned) {
-            this.noteLibrary.pinnedNoteList.insertBefore(noteDiv, this.noteLibrary.pinnedNoteList.firstChild);
-        } else {
-            this.noteLibrary.noteList.insertBefore(noteDiv, this.noteLibrary.noteList.firstChild);
-        }
-*/
-const sortOrder = document.getElementById('sort-order').value;
+       // const notes = this.noteLibrary.storageManager.getNotes();
+        const noteDiv = this.noteLibrary.createHTMLNote(newNote); // Create DOM representation
 
-if (newNote.pinned) {
-    if (sortOrder === 'newest') {
-        this.noteLibrary.pinnedNoteList.insertBefore(noteDiv, this.noteLibrary.pinnedNoteList.firstChild);
-    } else {
-        this.noteLibrary.pinnedNoteList.appendChild(noteDiv);
-    }
-} else {
-    if (sortOrder === 'newest') {
-        this.noteLibrary.noteList.insertBefore(noteDiv, this.noteLibrary.noteList.firstChild);
-    } else {
-        this.noteLibrary.noteList.appendChild(noteDiv);
-    }
-}
+        const sortOrder = document.getElementById('sort-order').value;
+        
+        if (newNote.pinned) {
+            if (sortOrder === 'newest') {
+                this.noteLibrary.pinnedNoteList.insertBefore(noteDiv, this.noteLibrary.pinnedNoteList.firstChild);
+            } else {
+                this.noteLibrary.pinnedNoteList.appendChild(noteDiv);
+            }
+        } else {
+            if (sortOrder === 'newest') {
+                this.noteLibrary.noteList.insertBefore(noteDiv, this.noteLibrary.noteList.firstChild);
+            } else {
+                this.noteLibrary.noteList.appendChild(noteDiv);
+            }
+        }
 
         // Fermez la modale 
         document.getElementById('createNoteModal').close();
