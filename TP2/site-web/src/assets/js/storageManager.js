@@ -37,8 +37,10 @@ export default class StorageManager {
    * @returns {Note | undefined} la note si trouvée
    */
   getNoteById(id) {
-    return undefined;
-  }
+     const notes = this.getNotes();
+     const noteById = notes.find(note => note.id === id);
+     return noteById || null;
+   }
 
   /**
    * TODO : Ajoute des notes au storage
@@ -61,13 +63,23 @@ export default class StorageManager {
    * @param {string} id identifiant de la note
    */
   deleteNoteById(id) {
+    const note = this.getNoteById(id);
+    const notes = this.getNotes();
+    const index = notes.indexOf(note);
+    notes.splice(index, 1);
+    this.setNotes(notes);
   }
 
+  clear(){
+    this.deleteAllNotes();
+  }
   /**
    * TODO : Supprime toutes les notes du storage
    */
   deleteAllNotes() {
+    localStorage.removeItem('notes');
   }
+
 
   /**
    * TODO : Modifie une note en fonction de son ID
@@ -76,12 +88,21 @@ export default class StorageManager {
    * @param {string[]} tags étiquettes de la note
    */
   modifyNoteById(id, content, tags) {
+    const notes = this.getNotes();
+    const note = notes.find(n => n.id === id);
+    if (note) {
+      note.content = content;
+      note.tags = tags;
+      this.setNotes(notes);
+    }
   }
 
   /**
    * TODO : Modifie l'état épinglé de la note en fonction de son ID
    * @param {string} id identifiant de la note
    */
-  pinById(id) {
+  getNoteById(id) {
+    const notes = this.getNotes();
+    return notes.find(note => note.id === id);
   }
 }
