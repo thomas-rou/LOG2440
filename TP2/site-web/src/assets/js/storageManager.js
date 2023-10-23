@@ -63,7 +63,6 @@ export default class StorageManager {
    * @param {string} id identifiant de la note
    */
   deleteNoteById(id) {
-    //use get notes by id to get the note and then delete it from local storage
     const note = this.getNoteById(id);
     const notes = this.getNotes();
     const index = notes.indexOf(note);
@@ -71,12 +70,16 @@ export default class StorageManager {
     this.setNotes(notes);
   }
 
+  clear(){
+    this.deleteAllNotes();
+  }
   /**
    * TODO : Supprime toutes les notes du storage
    */
   deleteAllNotes() {
     localStorage.removeItem('notes');
   }
+
 
   /**
    * TODO : Modifie une note en fonction de son ID

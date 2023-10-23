@@ -6,7 +6,7 @@
 export default class NoteLibrary {
   noteList = document.getElementById('notes');
   pinnedNoteList = document.getElementById('pinned-notes');
-  ascendingValueComparer = 'newest';
+  ascendingValueComparer = 'oldest';
   selectedNote = null;
 
   constructor(storageManager) {
@@ -107,30 +107,44 @@ export default class NoteLibrary {
    * @param {Array<Note>} notes notes à afficher dans la page
    */
   generateHTMLNotes(notes) {
-    const pinnedNotes = notes.filter(note => note.pinned);
-    const unpinnedNotes = notes.filter(note => !note.pinned);
-    const pinnedNotesHTML = pinnedNotes.map(note => this.createHTMLNote(note));
-    const unpinnedNotesHTML = unpinnedNotes.map(note => this.createHTMLNote(note));
     const pinnedNotesDiv = document.getElementById('pinned-notes');
     const unpinnedNotesDiv = document.getElementById('notes');
-
-    pinnedNotesHTML.forEach((noteDiv) => {
-      pinnedNotesDiv.appendChild(noteDiv);
-    });
-
-    unpinnedNotesHTML.forEach((noteDiv) => {
-      unpinnedNotesDiv.appendChild(noteDiv);
+  
+    // Vide les conteneurs existants avant d'ajouter de nouvelles notes.
+    pinnedNotesDiv.innerHTML = '';
+    unpinnedNotesDiv.innerHTML = '';
+  
+    notes.forEach(note => {
+      const noteDiv = this.createHTMLNote(note);
+      if (note.pinned) {
+        pinnedNotesDiv.appendChild(noteDiv);
+      } else {
+        unpinnedNotesDiv.appendChild(noteDiv);
+      }
     });    
   }
-    
 
   /**
    * TODO : Met à jour les listes des notes affichées dans la page
    * @param {Array<Note>} notes notes à afficher dans la page
    */
   updateListsInterface(notes) {
-  }
+    this.generateHTMLNotes(notes);
+}
 
+/**
+ * Trie les notes selon l'option sélectionnée (du plus récent au plus ancien ou l'inverse).
+ * @param {string} order L'ordre de tri, peut être 'newest' ou 'oldest'
+ */
+sortNotesBy(order) {
+  const notes = this.storageManager.getNotes();
+  if (order === 'newest') {
+      notes.sort((a, b) => new Date(b.lastEdit) - new Date(a.lastEdit));
+  } else if (order === 'oldest') {
+      notes.sort((a, b) => new Date(a.lastEdit) - new Date(b.lastEdit));
+  }
+  this.generateHTMLNotes(notes);
+}
   /**
    * TODO : Ajoute une note à une des listes.
    * La note est ajoutée au début ou à la fin de la liste en fonction de l'option de tri choisie dans la page
@@ -138,39 +152,67 @@ export default class NoteLibrary {
    * @param {HTMLElement} listElement liste (Notes Épinglées ou Notes) à modifier
    */
   addNoteToList(note, listElement) {
+    const noteDiv = this.createHTMLNote(note);
+  
+  if (this.ascendingValueComparer === 'oldest') {
+    // Ajoute la note au début de la liste
+    console.warn(`Plus vieux`);
+    listElement.insertBefore(noteDiv, listElement.firstChild);
+    this.updateListsInterface(listElement);
+  } else {
+    // Ajoute la note à la fin de la liste
+    listElement.appendChild(noteDiv);
+    this.updateListsInterface(listElement);
   }
-
+}
   /**
    * TODO : Supprime une note en fonction de son ID et met à jour la vue
    * @param {string} id identifiant de la note
    */
   deleteNote(id) {
     this.storageManager.deleteNoteById(id);
+    
+    // Trouver l'élément de la note sur la page et le supprimer
     const noteDiv = document.querySelector(`[data-id="${id}"]`);
-    noteDiv.remove();
-  }
+    if (noteDiv) { 
+        noteDiv.remove(); 
+    } else {
+        console.warn(`Note with ID ${id} was not found on the page.`);
+    }
+}
+
 
   /**
    * TODO : Modifie l'état épinglé de la note en fonction de son ID et met à jour la vue
    * @param {string} id identifiant de la note
    */
   pinNote(id) {
-  }
+    const note = this.storageManager.getNoteById(id);
+    if (note) {
+        // Basculer l'état "épinglé"
+        note.pinned = !note.pinned;
+        this.storageManager.updateNote(id, note);
+        
+        // Mettre à jour la vue
+        const noteDiv = document.querySelector(`[data-id="${id}"]`);
+        if (noteDiv) {
+            if (note.pinned) {
+                this.pinnedNoteList.appendChild(noteDiv);
+            } else {
+                this.noteList.appendChild(noteDiv);
+            }
+        }
+    }
+}
 
   /**
    * TODO : Supprime toutes les notes du site et met à jour la vue
    */
   deleteAll() {
-    window.onload = () => {
-      const deleteDiv = document.getElementById('delete-all-button');
-      const deleteScript = document.createElement('script');
-      deleteScript.addEventListener('click', () => {
-        console.log('delete all');
-        this.storageManager.deleteAllNotes();
-        const notes = document.querySelectorAll('.note');    
-        notes.forEach(note => note.remove());
-      });
-      deleteDiv.appendChild(deleteScript);
-    };
-  }
+
+            this.storageManager.deleteAllNotes();
+            const notes = document.querySelectorAll('.note');
+            notes.forEach(note => note.remove());
+
+}
 }
