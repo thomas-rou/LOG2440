@@ -10,6 +10,7 @@ export default class NoteEditor {
    * @param {StorageManager} storageManager gestionnaire du LocalStorage
    */
   constructor(storageManager) {
+    this.storageManager = storageManager;
   }
 
   /**
@@ -28,6 +29,65 @@ export default class NoteEditor {
    */
   displayNoteDetails() {
     const noteId = this.getNoteIdFromURL();
+    const editableNote = this.storageManager.getNoteById(noteId);
+
+    const detailDiv = document.getElementById('note-content');
+    detailDiv.innerHTML = '';
+
+    if (!editableNote) {
+      const errorMessage = document.createElement('h2');
+      errorMessage.id = 'error-message';
+      errorMessage.textContent = "La note demandée n'existe pas.";
+      detailDiv.appendChild(errorMessage);
+    }
+    else {
+      //Note Title
+      const detailTitle = document.createElement('h2');
+      detailTitle.id = 'note-title';
+      detailTitle.textContent = editableNote.title;
+      detailDiv.appendChild(detailTitle);
+
+      //Note date
+      const detailDate = document.createElement('p');
+      detailDate.id = 'note-date';
+      detailDate.classList.add('date');
+      detailDate.textContent = 'Dernière modification: ' + new Date(editableNote.lastEdit).toLocaleDateString();
+      detailDiv.appendChild(detailDate);
+
+      //Editable Note tags
+      const detailTags = document.createElement('p');
+      detailTags.id = 'note-tags';
+      detailTags.textContent = 'Tags: ';
+      const textTags = document.createElement('span');
+      textTags.id = 'tags';
+      textTags.contentEditable = true;
+      textTags.textContent = editableNote.tags;
+      detailTags.appendChild(textTags);
+      detailDiv.appendChild(detailTags);
+
+      //Note color + background of the text only same as color
+      const detailColor = document.createElement('p');
+      detailColor.id = 'note-color';
+      detailColor.textContent = 'Couleur: ' ;
+      const textColored = document.createElement('span');
+      textColored.id = 'text-colored';
+      textColored.textContent = editableNote.color;
+      textColored.style.backgroundColor = editableNote.color;
+      detailColor.appendChild(textColored);
+      detailDiv.appendChild(detailColor);
+
+      //Note pin status
+      const detailPin = document.createElement('p');
+      detailPin.id = 'note-pin';
+      detailPin.textContent = 'Épinglé: ' + editableNote.pinned;
+      detailDiv.appendChild(detailPin);
+
+      //Editable Note content in <textarea>
+      const detailContent = document.createElement('textarea');
+      detailContent.id = 'noteContent';
+      detailContent.textContent = editableNote.content;
+      detailDiv.appendChild(detailContent);
+    }
   }
 
   /**
@@ -35,6 +95,9 @@ export default class NoteEditor {
    * Modifie l'affichage de l'état épingé dans la page.
    */
   pin() {
+    const noteId = this.getNoteIdFromURL();
+    this.storageManager.pinById(noteId);
+    this.displayNoteDetails();
   }
 
   /**
@@ -42,6 +105,14 @@ export default class NoteEditor {
    * Supprime la note si l'utilisateur confirme et redirige vers la page principale.
    */
   delete() {
+    const noteId = this.getNoteIdFromURL();
+    const note = this.storageManager.getNoteById(noteId);
+    const confirmMessage = `Êtes-vous sûr de vouloir supprimer la note "${note.title}" ?`;
+    const confirmed = window.confirm(confirmMessage);
+    if (confirmed) {
+      this.storageManager.deleteNoteById(noteId);
+      window.location.href = 'index.html';
+    }
   }
 }
 
@@ -54,6 +125,14 @@ export default class NoteEditor {
 function saveChangesByIdListener(noteEditor, storageManager) {
   const saveButton = document.getElementById('save-button');
   const contentElement = document.getElementById('noteContent');
+
+  saveButton.addEventListener('click', () => {
+    const noteId = noteEditor.getNoteIdFromURL();
+    const modifiedContent = contentElement.value;
+    const modifiedTags = document.getElementById('tags').textContent;
+
+    storageManager.modifyNoteById(noteId, modifiedContent, modifiedTags);
+  });
 }
 
 /**
@@ -62,6 +141,18 @@ function saveChangesByIdListener(noteEditor, storageManager) {
  * @param {NoteEditor} noteEditor gestionnaire d'édition de la note
  */
 function addKeyBoardEvents(noteEditor) {
+  // add event listener for keyup event for delete using the delete key
+  document.addEventListener('keyup', (event) => {
+    if (event.code === 'Delete' && event.target.nodeName !== 'TEXTAREA' && event.target.isContentEditable === false) {
+      noteEditor.delete();
+    }
+  });
+  // add event listener for keyup event for pin using the p key if note writing in textarea
+  document.addEventListener('keyup', (event) => {
+    if (event.code === 'KeyP' && event.target.nodeName !== 'TEXTAREA' && event.target.isContentEditable === false) {
+      noteEditor.pin();
+    }
+  });
 }
 
 window.onload = () => {

@@ -37,7 +37,9 @@ export default class StorageManager {
    * @returns {Note | undefined} la note si trouvée
    */
   getNoteById(id) {
-    return undefined;
+    const notes = this.getNotes();
+    const noteById = notes.find(note => note.id === id);
+    return noteById || null;
   }
 
   /**
@@ -61,12 +63,19 @@ export default class StorageManager {
    * @param {string} id identifiant de la note
    */
   deleteNoteById(id) {
+    //use get notes by id to get the note and then delete it from local storage
+    const note = this.getNoteById(id);
+    const notes = this.getNotes();
+    const index = notes.indexOf(note);
+    notes.splice(index, 1);
+    this.setNotes(notes);
   }
 
   /**
    * TODO : Supprime toutes les notes du storage
    */
   deleteAllNotes() {
+    localStorage.removeItem('notes');
   }
 
   /**
@@ -76,6 +85,20 @@ export default class StorageManager {
    * @param {string[]} tags étiquettes de la note
    */
   modifyNoteById(id, content, tags) {
+    //use get notes by id to get the note and then modify it in local storage
+    const notes = this.getNotes();
+    const updatedNotes = notes.map(note => {
+      if (note.id === id) {
+        return {
+          ...note,
+          content: content,
+          tags: tags,
+          lastEdit: new Date()
+        };
+      }
+      return note;
+    });
+    this.setNotes(updatedNotes);    
   }
 
   /**
@@ -83,5 +106,17 @@ export default class StorageManager {
    * @param {string} id identifiant de la note
    */
   pinById(id) {
+    // change the pinned status of the note indicated by the id and update the information in local storage
+    const notes = this.getNotes();
+    const updatedNotes = notes.map(note => {
+      if (note.id === id) {
+        return {
+          ...note,
+          pinned: !note.pinned
+        };
+      }
+      return note;
+    });
+    this.setNotes(updatedNotes);    
   }
 }
