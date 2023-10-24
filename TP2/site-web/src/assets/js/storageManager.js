@@ -65,16 +65,15 @@ export default class StorageManager {
    * @param {string} id identifiant de la note
    */
   deleteNoteById(id) {
-    const note = this.getNoteById(id);
-    const notes = this.getNotes();
-    const index = notes.indexOf(note);
-    notes.splice(index, 1);
-    this.setNotes(notes);
+    const currentNotes = this.getNotes();
+    const updateNotes = currentNotes.filter((note) => note.id !== id);
+    localStorage.setItem(this.STORAGE_KEY_NOTES, JSON.stringify(updateNotes));
   }
 
-  clear(){
+  clear() {
     this.deleteAllNotes();
   }
+
   /**
    * TODO : Supprime toutes les notes du storage
    */
@@ -94,14 +93,14 @@ export default class StorageManager {
       if (note.id === id) {
         return {
           ...note,
-          content: content,
-          tags: tags,
+          content,
+          tags,
           lastEdit: new Date()
         };
       }
       return note;
     });
-    this.setNotes(updatedNotes);    
+    this.setNotes(updatedNotes);
   }
 
   /**
@@ -119,6 +118,6 @@ export default class StorageManager {
       }
       return note;
     });
-    this.setNotes(updatedNotes);    
+    this.setNotes(updatedNotes);
   }
 }

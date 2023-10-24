@@ -31,8 +31,7 @@ export default class NoteLibrary {
     const pinDiv = document.createElement('div');
     if (note.pinned) {
       pinDiv.id = 'pinned-icon-spaces';
-    }
-    else {
+    } else {
       pinDiv.id = 'unpinned-icon-spaces';
     }
     noteDiv.appendChild(pinDiv);
@@ -45,9 +44,8 @@ export default class NoteLibrary {
     // add pin icon
     const pinIcon = document.createElement('i');
     pinIcon.classList.add('fa', 'fa-paperclip', 'pin', 'hidden');
-    pinIcon.style.color = 'white';    
+    pinIcon.style.color = 'white';
     pinDiv.appendChild(pinIcon);
-
     // add tags
     const tags = document.createElement('p');
     tags.textContent = 'Tags: ' + note.tags;
@@ -98,11 +96,11 @@ export default class NoteLibrary {
   generateHTMLNotes(notes) {
     const pinnedNotesDiv = document.getElementById('pinned-notes');
     const unpinnedNotesDiv = document.getElementById('notes');
-  
+
     // Vide les conteneurs existants avant d'ajouter de nouvelles notes.
     pinnedNotesDiv.innerHTML = '';
     unpinnedNotesDiv.innerHTML = '';
-  
+
     notes.forEach(note => {
       const noteDiv = this.createHTMLNote(note);
       if (note.pinned) {
@@ -110,7 +108,7 @@ export default class NoteLibrary {
       } else {
         unpinnedNotesDiv.appendChild(noteDiv);
       }
-    });    
+    });
   }
 
   /**
@@ -121,19 +119,20 @@ export default class NoteLibrary {
     this.generateHTMLNotes(notes);
   }
 
-/**
- * Trie les notes selon l'option sélectionnée (du plus récent au plus ancien ou l'inverse).
- * @param {string} order L'ordre de tri, peut être 'newest' ou 'oldest'
- */
-sortNotesBy(order) {
-  const notes = this.storageManager.getNotes();
-  if (order === 'newest') {
+  /**
+  * Trie les notes selon l'option sélectionnée (du plus récent au plus ancien ou l'inverse).
+  * @param {string} order L'ordre de tri, peut être 'newest' ou 'oldest'
+  */
+  sortNotesBy(order) {
+    const notes = this.storageManager.getNotes();
+    if (order === 'newest') {
       notes.sort((a, b) => new Date(b.lastEdit) - new Date(a.lastEdit));
-  } else if (order === 'oldest') {
+    } else if (order === 'oldest') {
       notes.sort((a, b) => new Date(a.lastEdit) - new Date(b.lastEdit));
+    }
+    this.generateHTMLNotes(notes);
   }
-  this.generateHTMLNotes(notes);
-}
+
   /**
    * TODO : Ajoute une note à une des listes.
    * La note est ajoutée au début ou à la fin de la liste en fonction de l'option de tri choisie dans la page
@@ -142,18 +141,19 @@ sortNotesBy(order) {
    */
   addNoteToList(note, listElement) {
     const noteDiv = this.createHTMLNote(note);
-  
-  if (this.ascendingValueComparer === 'oldest') {
-    // Ajoute la note au début de la liste
-    console.warn(`Plus vieux`);
-    listElement.insertBefore(noteDiv, listElement.firstChild);
-    this.updateListsInterface(listElement);
-  } else {
-    // Ajoute la note à la fin de la liste
-    listElement.appendChild(noteDiv);
-    this.updateListsInterface(listElement);
+
+    if (this.ascendingValueComparer === 'oldest') {
+      // Ajoute la note au début de la liste
+      console.warn(`Plus vieux`);
+      listElement.insertBefore(noteDiv, listElement.firstChild);
+      this.updateListsInterface(listElement);
+    } else {
+      // Ajoute la note à la fin de la liste
+      listElement.appendChild(noteDiv);
+      this.updateListsInterface(listElement);
+    }
   }
-}
+
   /**
    * TODO : Supprime une note en fonction de son ID et met à jour la vue
    * @param {string} id identifiant de la note
@@ -162,8 +162,7 @@ sortNotesBy(order) {
     this.storageManager.deleteNoteById(id);
     const notes = this.storageManager.getNotes();
     this.updateListsInterface(notes);
-}
-
+  }
 
   /**
    * TODO : Modifie l'état épinglé de la note en fonction de son ID et met à jour la vue
@@ -173,7 +172,7 @@ sortNotesBy(order) {
     this.storageManager.pinById(noteId);
     const notes = this.storageManager.getNotes();
     this.updateListsInterface(notes);
-}
+  }
 
   /**
    * TODO : Supprime toutes les notes du site et met à jour la vue

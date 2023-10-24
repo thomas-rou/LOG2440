@@ -40,22 +40,21 @@ export default class NoteEditor {
       errorMessage.id = 'error-message';
       errorMessage.textContent = "La note demandée n'existe pas.";
       detailDiv.appendChild(errorMessage);
-    }
-    else {
-      //Note Title
+    } else {
+      // Note Title
       const detailTitle = document.createElement('h2');
       detailTitle.id = 'note-title';
       detailTitle.textContent = editableNote.title;
       detailDiv.appendChild(detailTitle);
 
-      //Note date
+      // Note date
       const detailDate = document.createElement('p');
       detailDate.id = 'note-date';
       detailDate.classList.add('date');
       detailDate.textContent = 'Dernière modification: ' + new Date(editableNote.lastEdit).toLocaleDateString();
       detailDiv.appendChild(detailDate);
 
-      //Editable Note tags
+      // Editable Note tags
       const detailTags = document.createElement('p');
       detailTags.id = 'note-tags';
       detailTags.textContent = 'Tags: ';
@@ -66,10 +65,10 @@ export default class NoteEditor {
       detailTags.appendChild(textTags);
       detailDiv.appendChild(detailTags);
 
-      //Note color + background of the text only same as color
+      // Note color + background of the text only same as color
       const detailColor = document.createElement('p');
       detailColor.id = 'note-color';
-      detailColor.textContent = 'Couleur: ' ;
+      detailColor.textContent = 'Couleur: ';
       const textColored = document.createElement('span');
       textColored.id = 'text-colored';
       textColored.textContent = editableNote.color;
@@ -77,13 +76,13 @@ export default class NoteEditor {
       detailColor.appendChild(textColored);
       detailDiv.appendChild(detailColor);
 
-      //Note pin status
+      // Note pin status
       const detailPin = document.createElement('p');
       detailPin.id = 'note-pin';
       detailPin.textContent = 'Épinglé: ' + editableNote.pinned;
       detailDiv.appendChild(detailPin);
 
-      //Editable Note content in <textarea>
+      // Editable Note content in <textarea>
       const detailContent = document.createElement('textarea');
       detailContent.id = 'noteContent';
       detailContent.textContent = editableNote.content;
@@ -132,9 +131,9 @@ function saveChangesByIdListener(noteEditor, storageManager) {
     const noteId = noteEditor.getNoteIdFromURL();
     const modifiedContent = contentElement.value;
     const modifiedTags = tagsElement.textContent.split(',')
-    .map(tag => tag.trim())
-    .filter(tag => tag.length > 0)
-    .map(tag => ` ${tag}`);
+      .map(tag => tag.trim())
+      .filter(tag => tag.length > 0)
+      .map(tag => ` ${tag}`);
     storageManager.modifyNoteById(noteId, modifiedContent, modifiedTags);
   });
 }
