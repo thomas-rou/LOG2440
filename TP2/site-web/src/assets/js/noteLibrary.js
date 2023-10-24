@@ -1,7 +1,9 @@
-
+import MainPageEventsController from './mainPageEventsController.js';
 /**
  * @typedef {import('./utils.js').Note} Note
  */
+
+
 
 export default class NoteLibrary {
   noteList = document.getElementById('notes');
@@ -117,6 +119,8 @@ export default class NoteLibrary {
    */
   updateListsInterface(notes) {
     this.generateHTMLNotes(notes);
+    const controller = new MainPageEventsController(NoteLibrary);
+    controller.listenToAllEvents();
   }
 
   /**

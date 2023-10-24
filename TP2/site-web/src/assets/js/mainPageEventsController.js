@@ -39,11 +39,11 @@ export default class MainPageEventsController {
   submitListener() {
     const noteForm = document.getElementById('noteForm');
     noteForm.addEventListener('submit', (e) => {
-      e.preventDefault();
       const newNote = this.getNoteDetailsFromModal();
       this.noteLibrary.storageManager.addNote(newNote);
       const noteDiv = this.noteLibrary.createHTMLNote(newNote);
       const sortOrder = document.getElementById('sort-order').value;
+
       if (newNote.pinned) {
         if (sortOrder === 'newest') {
           this.noteLibrary.pinnedNoteList.insertBefore(noteDiv, this.noteLibrary.pinnedNoteList.firstChild);
@@ -71,8 +71,7 @@ export default class MainPageEventsController {
     const tags = document.getElementById('noteTags').value.split(',')
       .map(tag => tag.trim())
       .filter(tag => tag.length > 0)
-      .map(tag => ` ${tag}`)
-      .join(',').trim()
+      .map(tag => ` ${tag}`);
     const color = document.getElementById('noteColor').value;
     const pinned = document.getElementById('notePinned').checked;
 
@@ -106,7 +105,8 @@ export default class MainPageEventsController {
     const detailsButtons = document.querySelectorAll('.details-button');
     detailsButtons.forEach(button => {
       button.addEventListener('click', (e) => {
-        const note = this.noteLibrary.storageManager.getNoteById(e.target.parentElement.getAttribute('data-id'));
+        //const note = this.noteLibrary.storageManager.getNoteById(e.target.parentElement.getAttribute('data-id'));
+        const note = this.noteLibrary.storageManager.getNoteById(e.target.closest('.note').getAttribute('data-id'));
         window.location.href = 'detail.html' + '?' + 'id=' + note.id;
       });
     });
@@ -114,7 +114,7 @@ export default class MainPageEventsController {
 
   /**
    * fonction qui s'occupe des évènement sur les "delete-button"
-   * il appelle la fonction deleteNote de NoteLibrary qui elle appelle celle du localStorage
+   * Elle appelle la fonction deleteNote de NoteLibrary qui elle appelle celle du localStorage
    */
   deleteListener() {
     const deleteButtons = document.querySelectorAll('.delete-button');

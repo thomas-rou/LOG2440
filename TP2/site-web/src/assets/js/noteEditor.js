@@ -144,13 +144,11 @@ function saveChangesByIdListener(noteEditor, storageManager) {
  * @param {NoteEditor} noteEditor gestionnaire d'édition de la note
  */
 function addKeyBoardEvents(noteEditor) {
-  // add event listener for keyup event for delete using the delete key
   document.addEventListener('keyup', (event) => {
     if (event.code === 'Delete' && event.target.nodeName !== 'TEXTAREA' && event.target.isContentEditable === false) {
       noteEditor.delete();
     }
   });
-  // add event listener for keyup event for pin using the p key if note writing in textarea
   document.addEventListener('keyup', (event) => {
     if (event.code === 'KeyP' && event.target.nodeName !== 'TEXTAREA' && event.target.isContentEditable === false) {
       noteEditor.pin();
