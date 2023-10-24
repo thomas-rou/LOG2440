@@ -71,7 +71,7 @@ export default class MainPageEventsController {
     const tags = document.getElementById('noteTags').value.split(',')
       .map(tag => tag.trim())
       .filter(tag => tag.length > 0)
-      .map(tag => ` ${tag}`);
+      .map(tag => `${tag}`);
     const color = document.getElementById('noteColor').value;
     const pinned = document.getElementById('notePinned').checked;
 
@@ -105,7 +105,6 @@ export default class MainPageEventsController {
     const detailsButtons = document.querySelectorAll('.details-button');
     detailsButtons.forEach(button => {
       button.addEventListener('click', (e) => {
-        //const note = this.noteLibrary.storageManager.getNoteById(e.target.parentElement.getAttribute('data-id'));
         const note = this.noteLibrary.storageManager.getNoteById(e.target.closest('.note').getAttribute('data-id'));
         window.location.href = 'detail.html' + '?' + 'id=' + note.id;
       });

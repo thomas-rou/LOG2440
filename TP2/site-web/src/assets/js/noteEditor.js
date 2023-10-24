@@ -133,7 +133,7 @@ function saveChangesByIdListener(noteEditor, storageManager) {
     const modifiedTags = tagsElement.textContent.split(',')
       .map(tag => tag.trim())
       .filter(tag => tag.length > 0)
-      .map(tag => ` ${tag}`);
+      .map(tag => `${tag}`);
     storageManager.modifyNoteById(noteId, modifiedContent, modifiedTags);
   });
 }

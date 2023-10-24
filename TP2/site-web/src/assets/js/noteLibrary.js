@@ -3,8 +3,6 @@ import MainPageEventsController from './mainPageEventsController.js';
  * @typedef {import('./utils.js').Note} Note
  */
 
-
-
 export default class NoteLibrary {
   noteList = document.getElementById('notes');
   pinnedNoteList = document.getElementById('pinned-notes');
@@ -50,7 +48,7 @@ export default class NoteLibrary {
     pinDiv.appendChild(pinIcon);
     // add tags
     const tags = document.createElement('p');
-    tags.textContent = 'Tags: ' + note.tags;
+    tags.textContent = 'Tags:' + note.tags.join(', ');
     noteDiv.appendChild(tags);
 
     // add date
