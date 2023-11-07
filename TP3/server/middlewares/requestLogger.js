@@ -9,7 +9,8 @@ const requestLogger = async (req, res, next) => {
         const logMessage = `${new Date().toLocaleString()} - ${req.method} - ${req.path}`;
 
         // TODO : mettre à jour le fichier de journalisation et compléter le Middleware
-        await Promise.resolve(null);
+        await logsManager.writeLog(logMessage);
+        next();
     } catch (error) {
         console.error(`Error while logging request ${error}`);
         next();
