@@ -12,7 +12,6 @@ class ReviewManager {
     async getReviews() {
         const reviewsData = await this.fileManager.readFile();
         return JSON.parse(reviewsData);
-        // return [];
     }
 
     /**
@@ -24,7 +23,6 @@ class ReviewManager {
         const reviews = await this.getReviews();
 
         return reviews.filter(review => review.reviewedPartnerId === partnerId);
-        // return {todo: 'recupérer la bonne revue'};
     }
 
     /**
@@ -35,6 +33,8 @@ class ReviewManager {
     async addReview(review) {
         // ID généré aléatoirement
         review.id = randomUUID();
+        review.likes = 0;
+        review.date = new Date().toISOString().split("T")[0];
 
         const reviews = await this.getReviews();
         reviews.push(review);
@@ -50,19 +50,20 @@ class ReviewManager {
      */
     async likeReview(reviewId) {
        // Increment the like count for the specified review
-       let isModified = false;
        const reviews = await this.getReviews();
+       const initialLikes = reviews.reduce((total, review) => total + (review.likes || 0), 0);
        const modifiedReviews = reviews.map((review) => {
               if (review.id === reviewId) {
                 review.likes = (review.likes || 0) + 1;
-                isModified = true;
               }
               return review;
          });
+         const currentLikes = modifiedReviews.reduce((total, review) => total + (review.likes || 0), 0);
 
         // Save the updated reviews back to the file
         await this.fileManager.writeFile(JSON.stringify(modifiedReviews, null, 2));
-        return isModified;
+
+        return currentLikes > initialLikes;
     }
 
     /**
