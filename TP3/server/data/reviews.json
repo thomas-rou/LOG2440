@@ -25,5 +25,14 @@
     "id": "5f66704e-cd42-49f4-b053-ef4762b31c84",
     "date": "2023-10-12",
     "likes": 3
+  },
+  {
+    "rating": "2",
+    "comment": "good",
+    "author": "moi allo",
+    "reviewedPartnerId": "433560e4-62b9-481b-8135-da9bb9d68102",
+    "date": "2023-11-13",
+    "id": "672dfe8d-2812-4342-8f35-b321b1c0aef1",
+    "likes": 0
   }
 ]

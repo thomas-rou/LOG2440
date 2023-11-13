@@ -12,14 +12,6 @@ const submitButton = document.getElementById('submit-btn');
 const deleteButton = document.getElementById('delete-btn');
 
 // TODO : récupérer le partenaire à travers l'identifiant dans l'URL
-/*
-const partner = null;
-if (partner) {
-    document.getElementById('profile-firstName').textContent = partner.firstName;
-    document.getElementById('profile-lastName').textContent = partner.lastName;
-    document.getElementById('school').textContent = partner.school;
-    document.getElementById('program').textContent = partner.program;
-};*/
 document.addEventListener('DOMContentLoaded', async () => {
     if (partnerId) {
         try {
@@ -85,12 +77,22 @@ deleteButton.addEventListener('click', async (e) => {
     e.preventDefault();
 
     // TODO : Supprimer toutes les revues pour le partenaire
-    const response = null;
-    if (response) {
-        window.alert("L'étudiant a été supprimé !");
-        window.location.href = 'bonnePage.html';
-    } else {
-        alert("Impossible de supprimer l'étudiant !");
+    try {
+        // Send a DELETE request to the server to delete all reviews for the partner
+        const response = await httpManager.delete(`/api/review/${partnerId}`);
+
+        // Check if the response status code is 200 (OK) or 204 (No Content)
+        if (response.ok) {
+            window.alert("Toutes les revues de l'étudiant ont été supprimées !");
+            window.location.reload(); // Reload the page to reflect the changes
+        } else {
+            // If the server response is not OK, alert the user
+            throw new Error(`Échec de la suppression des revues: ${response.status}`);
+        }
+    } catch (error) {
+        // Log the error and alert the user
+        console.error("Failed to delete all reviews for the partner:", error);
+        alert("Impossible de supprimer les revues tres complete de l'étudiant !");
     }
 });
 
@@ -132,7 +134,7 @@ function createReviewElement(review) {
 
     likeBtn.addEventListener('click', async () => {
         try {
-            const updatedReview = await httpManager.post(`/api/reviews/${review.id}/like`);
+            const updatedReview = await httpManager.post(`/api/review/${review.id}/like`);
             if (updatedReview) {
                 likes.textContent = `Likes: ${updatedReview.likes}`;
             }
@@ -155,6 +157,7 @@ function createReviewElement(review) {
     });
 
     // TODO : Supprimer une revue et mettre à jour la vue
+    /*
     deleteBtn.addEventListener('click', async (e) => {
         try {
             await httpManager.delete(`/api/partners/${partnerId}/reviews`);
@@ -164,7 +167,7 @@ function createReviewElement(review) {
             console.error("Failed to delete all reviews for the partner:", error);
             alert("Impossible de supprimer les revues de l'étudiant !");
         }
-     });
+     });*/
 
     parent.appendChild(deleteBtn);
 
