@@ -59,9 +59,10 @@ router.patch("/:reviewId", async (request, response) => {
 
 // routes supprimer une revue en fonction de son identifant
 router.delete("/:reviewId", async (request, response) => {
-    const predicate = (review) => review.id === request.params.reviewId;
     try {
+        const predicate = (review) => review.id === request.params.reviewId;
         const deleted = await reviewManager.deleteReviewsMatchingPredicate(predicate);
+
         if (deleted) {
             response.status(HTTP_STATUS.SUCCESS).json(deleted);
         } else {
@@ -75,10 +76,14 @@ router.delete("/:reviewId", async (request, response) => {
 // routes ajouter une nouvelle revue seulement après avoir validé que tous les éléments nécessaires sont envoyés
 router.post("/", async (request, response) => {
     const review = request.body;
-    // valider que tous les éléments nécessaires sont envoyés (reviewedPartnerId, author, date, likes, comment)
-    if (!review.reviewedPartnerId || !review.author || !review.comment || !review.rating) {
-        response.status(HTTP_STATUS.BAD_REQUEST).send('Missing required fields');
-        return;
+    // valider que tous les éléments nécessaires sont envoyés (reviewedPartnerId, author, comment, rating)
+    try {
+        if (!review.reviewedPartnerId || !review.author || !review.comment || !review.rating) {
+            response.status(HTTP_STATUS.BAD_REQUEST).send('Missing required fields');
+            return;
+        }
+    } catch (error) {
+        response.status(HTTP_STATUS.SERVER_ERROR).json(error);
     }
     try {
         const newReview = await reviewManager.addReview(review);
