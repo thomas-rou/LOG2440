@@ -10,7 +10,9 @@ class ReviewManager {
      * @returns {Object[]} la liste des revues du fichier JSON
      */
     async getReviews() {
-        return [];
+        const reviewsData = await this.fileManager.readFile();
+        return JSON.parse(reviewsData);
+        // return [];
     }
 
     /**
@@ -19,7 +21,9 @@ class ReviewManager {
      * @returns {Object[]} la liste des revues pour un partenaire donné
      */
     async getReviewsForPartner(partnerId) {
-        return {todo: 'recupérer la bonne revue'};
+        const reviews = await this.getReviews();
+        return reviews.filter(review => review.reviewedPartnerId === partnerId);
+        // return {todo: 'recupérer la bonne revue'};
     }
 
     /**
@@ -32,7 +36,9 @@ class ReviewManager {
         review.id = randomUUID();
 
         const reviews = await this.getReviews();
-
+        reviews.push(review);
+        await this.fileManager.writeFile(JSON.stringify(reviews, null, 2));
+       
         return reviews;
     }
 
@@ -42,7 +48,16 @@ class ReviewManager {
      * @returns {boolean} true si la revue existe, false sinon
      */
     async likeReview(reviewId) {
-        return true;
+       // Increment the like count for the specified review
+       const reviews = await this.getReviews();
+       const review = reviews.find(r => r.id === reviewId);
+       if (review) {
+           review.likes = (review.likes || 0) + 1;
+           // Save the updated reviews back to the file
+           await this.fileManager.writeFile(JSON.stringify(reviews, null, 2));
+           return true;
+       }
+       return false;
     }
 
     /**

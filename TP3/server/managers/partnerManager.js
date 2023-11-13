@@ -10,7 +10,9 @@ class PartnerManager {
      * @returns {Object[]} la liste des partenaires du fichier JSON
      */
     async getPartners() {
-        return [];
+        const partnersData = await this.fileManager.readFile();
+        return JSON.parse(partnersData);
+        // return [];
     }
 
     /**
@@ -20,7 +22,8 @@ class PartnerManager {
      */
     async getPartner(partnerId) {
 
-        return {todo: 'recupérer le bon partenaire'};
+        const partners = await this.getPartners();
+        return partners.find(partner => partner.id === partnerId);
     }
 
     /**
@@ -33,7 +36,9 @@ class PartnerManager {
 
         const partners = await this.getPartners();
 
-        return partners;
+        partners.push(partner);
+        await this.fileManager.writeFile(JSON.stringify(partners, null, 2)); // Save the updated partners array back to the file
+        return partner;
     }
 
     /**
@@ -42,7 +47,15 @@ class PartnerManager {
      * @returns {boolean} true si suppression, false sinon
      */
     async deletePartner(partnerId) {
-        return false;
+        // Delete a partner by their ID
+        let partners = await this.getPartners();
+        const index = partners.findIndex(partner => partner.id === partnerId);
+        if (index === -1) {
+            return false; // Partner not found
+        }
+        partners.splice(index, 1); // Remove the partner from the array
+        await this.fileManager.writeFile(JSON.stringify(partners, null, 2)); // Save the updated partners array back to the file
+        return true;
     }
 }
 

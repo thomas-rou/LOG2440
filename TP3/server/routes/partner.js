@@ -29,4 +29,57 @@ router.get("/", async (request, response) => {
     Note : utilisez les méthodes HTTP et les codes de retour appropriés
 */
 
+/*
+ * Obtenir un partenaire en fonction de son identifiant
+*/
+router.get("/:id", async (request, response) => {
+    try {
+        const partner = await partnerManager.getPartner(request.params.id);
+        if (partner) {
+            response.status(HTTP_STATUS.SUCCESS).json(partner);
+        } else {
+            response.status(HTTP_STATUS.NOT_FOUND).send('Partner not found');
+        }
+    } catch (error) {
+        response.status(HTTP_STATUS.SERVER_ERROR).json({ error: error.message });
+    }
+});
+
+/*
+ * Supprimer un partenaire en fonction de son identifiant ET supprimer toutes les revues pour ce partenaire
+*/
+router.delete("/:id", async (request, response) => {
+    try {
+        const deleted = await partnerManager.deletePartner(request.params.id);
+        if (deleted) {
+            response.status(HTTP_STATUS.SUCCESS).send('Partner deleted');
+        } else {
+            response.status(HTTP_STATUS.NOT_FOUND).send('Partner not found');
+        }
+    } catch (error) {
+        response.status(HTTP_STATUS.SERVER_ERROR).json({ error: error.message });
+    }
+});
+
+/*
+ * Ajouter un nouveau partenaire
+*/
+router.post("/", async (request, response) => {
+    try {
+        const { firstName, lastName, school, program } = request.body;
+        if (!firstName || !lastName || !school || !program) {
+            return response.status(HTTP_STATUS.BAD_REQUEST).json({ error: "Missing required fields" });
+        }
+
+        const newPartner = await partnerManager.addPartner(request.body);
+        response.status(HTTP_STATUS.CREATED).json(newPartner);
+
+    } catch (error) {
+        response.status(HTTP_STATUS.SERVER_ERROR).json({ error: error.message });
+    }
+});
+
+
+
+
 module.exports = { router, partnerManager };
