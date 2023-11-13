@@ -10,7 +10,8 @@ class ReviewManager {
      * @returns {Object[]} la liste des revues du fichier JSON
      */
     async getReviews() {
-        return [];
+        const reviews = await this.fileManager.readFile();
+        return JSON.parse(reviews);
     }
 
     /**
@@ -19,7 +20,8 @@ class ReviewManager {
      * @returns {Object[]} la liste des revues pour un partenaire donné
      */
     async getReviewsForPartner(partnerId) {
-        return {todo: 'recupérer la bonne revue'};
+        const reviews = await this.getReviews();
+        return reviews.filter((review) => review.reviewedPartnerId === partnerId);
     }
 
     /**
