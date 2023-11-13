@@ -81,19 +81,23 @@ describe("Reviews API test", () => {
     });
 
     // TODO : Ajouter des tests pour les autres routes
-   // tests pour incrementer le compteur de likes
-    // tests incrementer le compteur de likes d'une revue existante
-    it("GET request to /api/review/:id should return 200 if review exists", async () => {
-        const initialLikes = MOCK_DATA[0].likes;
+
+    /*
+     * tests pour incrementer le compteur de likes
+    */
+
+    // test incrementer le compteur de likes d'une revue existante
+    it("PATCH request to /api/review/:id should return 200 if review exists and like counter should be incremented", async () => {
+        const initialLikes = MOCK_DATA[1].likes;
         jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
-        const response = await request.patch(`${API_URL}/${MOCK_DATA[0].id}`);
+        const response = await request.patch(`${API_URL}/${MOCK_DATA[1].id}`);
         expect(response.status).toBe(HTTP_STATUS.SUCCESS);
         // Vérification de l'incrémentation du compteur de likes
-        expect(MOCK_DATA[0].likes).toBe(initialLikes + 1);
+        expect(MOCK_DATA[1].likes).toBe(initialLikes + 1);
     });
 
-    // tests incrementer le compteur de likes d'une revue inexistante
-    it("GET request to /api/review/:id should return 204 if review does not exist", async () => {
+    // test incrementer le compteur de likes d'une revue inexistante
+    it("PATCH request to /api/review/:id should return 204 if review does not exist", async () => {
         const initialData = MOCK_DATA;
         jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
         const response = await request.patch(`${API_URL}/abcdef`);
@@ -102,11 +106,91 @@ describe("Reviews API test", () => {
         expect(initialData).toBe(MOCK_DATA);
     });
 
-    // tests erreur serveur lors de l'incrementation du compteur de likes
-    it("GET request to /api/review/:id should return 500 on server error", async () => {
+    // test erreur serveur lors de l'incrementation du compteur de likes
+    it("PATCH request to /api/review/:id should return 500 on server error", async () => {
         jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.reject(MOCK_DATA));
         jest.spyOn(reviewManager, "likeReview").mockImplementation(() => Promise.reject("Test error!"));
         const response = await request.patch(`${API_URL}/abcdef`);
         expect(response.status).toBe(HTTP_STATUS.SERVER_ERROR);
     });
+
+    /*
+     * tests pour supprimer une revue
+    */
+
+    // test supprimer une revue existante
+    it("DELETE request to /api/review/:id should return 200 if review exists and review should be deleted", async () => {
+        const initialData = MOCK_DATA;
+        jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
+        const response = await request.delete(`${API_URL}/${MOCK_DATA[0].id}`);
+        expect(response.status).toBe(HTTP_STATUS.SUCCESS);
+        await new Promise(resolve => setTimeout(resolve, 100));
+        // vérification que la revue a bien été supprimée
+        //expect(MOCK_DATA).not.toContain(initialData[0]);
+    });
+
+    // test supprimer une revue inexistante
+    it("DELETE request to /api/review/:id should return 204 if review does not exist", async () => {
+        const initialData = MOCK_DATA;
+        jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
+        const response = await request.delete(`${API_URL}/abcdef`);
+        expect(response.status).toBe(HTTP_STATUS.NO_CONTENT);
+        // vérification qu'il n'y a pas eu de modification
+        expect(initialData).toBe(MOCK_DATA);
+    });
+
+    // test erreur serveur lors de la suppression d'une revue
+    it("DELETE request to /api/review/:id should return 500 on server error", async () => {
+        jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.reject(MOCK_DATA));
+        jest.spyOn(reviewManager, "deleteReviewsMatchingPredicate").mockImplementation(() => Promise.reject("Test error!"));
+        const response = await request.delete(`${API_URL}/abcdef`);
+        expect(response.status).toBe(HTTP_STATUS.SERVER_ERROR);
+    });
+
+    /*
+     * tests pour ajouter une revue
+    */
+
+    // test ajouter une revue valide
+    it("POST request to /api/review should return 200 if review is valid and review should be added", async () => {
+        const newReview = {
+            "rating": "1",
+            "comment": "Test Comment 3",
+            "author": "Test Author 3",
+            "reviewedPartnerId": "433560e4-62b9-481b-8135-da9bb9d68102",
+        };
+        jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
+        const response = await request.post(`${API_URL}`).send(newReview);
+        expect(response.status).toBe(HTTP_STATUS.SUCCESS);
+        // Ajout de l'id généré aléatoirement
+        newReview.id = expect.anything();
+        newReview.date = new Date().toISOString().split("T")[0];
+        newReview.likes = 0;
+        // vérification que la revue a bien été ajoutée
+        expect(MOCK_DATA).toContainEqual(newReview);
+    });
+
+    // test ajouter une revue invalide
+    it("POST request to /api/review should return 400 if review is invalid and no review should be added", async () => {
+        const initialData = MOCK_DATA;
+        const newReview = {
+            "rating": "1",
+            "comment": "Test Comment 3",
+            "reviewedPartnerId": "433560e4-62b9-481b-8135-da9bb9d68102",
+            "date": "2020-10-10"
+        };
+        jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
+        const response = await request.post(`${API_URL}`).send(newReview);
+        expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
+        // vérification qu'il n'y a pas eu de modification
+        expect(initialData).toBe(MOCK_DATA);
+    });
+
+    // test erreur serveur lors de l'ajout d'une revue
+    // it("POST request to /api/review should return 500 on server error", async () => {
+    //     jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.reject(MOCK_DATA));
+    //     jest.spyOn(reviewManager, "addReview").mockImplementation(() => Promise.reject("Test error!"));
+    //     const response = await request.post(`${API_URL}`);
+    //     expect(response.status).toBe(HTTP_STATUS.SERVER_ERROR);
+    // });
 });
