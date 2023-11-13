@@ -4,8 +4,23 @@ import SERVER_URL from "./consts.js";
 // TODO : Charger tous les partenaires du serveur
 const httpManager = new HTTPManager(SERVER_URL);
 async function loadPartners() {
-    return await Promise.resolve(null);
-};
+    try {
+        const response = await httpManager.get('/api/partner'); 
+        if (!response || response.length === 0) {
+            return await Promise.resolve(null);
+        }
+        return response; 
+    } catch (error) {
+        console.error("Error loading partners from the server:", error);
+        return [];
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const partnersList = await loadPartners();
+    generateHTML(partnersList);
+});
+
 
 const partnersList = await loadPartners();
 

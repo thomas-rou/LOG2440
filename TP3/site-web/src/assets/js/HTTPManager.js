@@ -46,7 +46,51 @@ class HTTPManager {
     }
 
     // TODO : Implémenter les autres méthodes HTTP nécessaires
+    async put(endpoint, body) {
+        try {
+            const response = await fetch(`${this.baseURL}${endpoint}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+            return this.handleResponse(response);
+        } catch (error) {
+            console.error("La requête PUT a échoué :", error);
+            throw error;
+        }
+    }
 
+    async delete(endpoint) {
+        try {
+            const response = await fetch(`${this.baseURL}${endpoint}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            return this.handleResponse(response);
+        } catch (error) {
+            console.error("La requête DELETE a échoué :", error);
+            throw error;
+        }
+    }
+    async patch(endpoint, body) {
+        try {
+            const response = await fetch(`${this.baseURL}${endpoint}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+            return this.handleResponse(response);
+        } catch (error) {
+            console.error("La requête PATCH a échoué :", error);
+            throw error;
+        }
+    }
 }
 
 export default HTTPManager;

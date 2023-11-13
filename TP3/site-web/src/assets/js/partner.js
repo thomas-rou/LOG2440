@@ -12,14 +12,39 @@ const submitButton = document.getElementById('submit-btn');
 const deleteButton = document.getElementById('delete-btn');
 
 // TODO : récupérer le partenaire à travers l'identifiant dans l'URL
+/*
 const partner = null;
 if (partner) {
     document.getElementById('profile-firstName').textContent = partner.firstName;
     document.getElementById('profile-lastName').textContent = partner.lastName;
     document.getElementById('school').textContent = partner.school;
     document.getElementById('program').textContent = partner.program;
-};
+};*/
+document.addEventListener('DOMContentLoaded', async () => {
+    if (partnerId) {
+        try {
+            const partner = await httpManager.get(`/api/partner/${partnerId}`);
+            document.getElementById('profile-firstName').textContent = partner.firstName;
+            document.getElementById('profile-lastName').textContent = partner.lastName;
+            document.getElementById('school').textContent = partner.school;
+            document.getElementById('program').textContent = partner.program;
 
+            const reviews = await httpManager.get(`/api/review/${partnerId}`);
+            if (reviews && reviews.length > 0) {
+                const reviewsContainer = document.getElementById('reviews-list');
+                reviewsContainer.innerHTML = "";
+                reviews.forEach(review => {
+                    reviewsContainer.appendChild(createReviewElement(review));
+                });
+            }
+            else { reviews}
+        } catch (error) {
+            alert("Une erreur s'est produite lors du chargement des données du partenaire !");
+            console.error(error);
+        }
+    }
+});
+/*
 //  TODO : récupérer les revues pour le partenaire à travers l'identifiant dans l'URL
 const reviews = null;
 
@@ -29,7 +54,7 @@ if (reviews) {
     reviews.forEach(review => {
         reviewsContainer.appendChild(createReviewElement(review));
     });
-};
+};*/
 
 submitButton.addEventListener('click', async (e) => {
     e.preventDefault();
@@ -47,13 +72,12 @@ submitButton.addEventListener('click', async (e) => {
     // TODO : Ajouter une nouvelle revue sur le serveur
     // TODO : Rafraichir la page en cas de réussite ou rediriger l'utilisateur vers la page /error.html en cas d'échec
     try {
-        const response = {};
-        if (response) {
-            window.alert("Votre revue a été soumise !");
-        }
+        await httpManager.post(`/api/review`, review);
+        window.alert("Votre revue a été soumise !");
+        window.location.reload(); // Refresh the page to show the new review
     } catch (error) {
         alert("Échec de la soumission de la revue !");
-        window.location.href = 'bonnePage.html';
+        window.location.href = '/error.html';
     }
 });
 
@@ -103,13 +127,44 @@ function createReviewElement(review) {
     likeBtn.textContent = '👍';
 
     // TODO : Envoyer une demande d'incrémentation des "like" de la revue et mettre à jour la vue avec la nouvelle valeur
-    likeBtn.addEventListener('click', async (e) => { });
+    // likeBtn.addEventListener('click', async (e) => { });
+    // parent.appendChild(likeBtn);
+
+    likeBtn.addEventListener('click', async () => {
+        try {
+            const updatedReview = await httpManager.post(`/api/reviews/${review.id}/like`);
+            if (updatedReview) {
+                likes.textContent = `Likes: ${updatedReview.likes}`;
+            }
+        } catch (error) {
+            console.error("Failed to like review:", error);
+        }
+    });
     parent.appendChild(likeBtn);
 
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = "X";
+
+    deleteBtn.addEventListener('click', async () => {
+        try {
+            await httpManager.delete(`/api/reviews/${review.id}`);
+            parent.remove(); // Remove the review element from the page
+        } catch (error) {
+            console.error("Failed to delete review:", error);
+        }
+    });
+
     // TODO : Supprimer une revue et mettre à jour la vue
-    deleteBtn.addEventListener('click', async (e) => { });
+    deleteBtn.addEventListener('click', async (e) => {
+        try {
+            await httpManager.delete(`/api/partners/${partnerId}/reviews`);
+            window.alert("Toutes les revues de l'étudiant ont été supprimées !");
+            window.location.reload(); // Refresh the page to reflect the changes
+        } catch (error) {
+            console.error("Failed to delete all reviews for the partner:", error);
+            alert("Impossible de supprimer les revues de l'étudiant !");
+        }
+     });
 
     parent.appendChild(deleteBtn);
 
