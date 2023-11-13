@@ -41,5 +41,19 @@ router.get("/:partnerId", async (request, response) => {
         - Envoyer la nouvelle revue dans la réponse HTTP
     Note : utilisez les méthodes HTTP et les codes de retour appropriés
 */
+// Incrémenter le compteur de "likes" d'une revue en fonction de son identifiant
+router.patch("/:reviewId", async (request, response) => {
+    try {
+        const changes = await reviewManager.likeReview(request.params.reviewId);
+
+        if (changes) {
+            response.status(HTTP_STATUS.SUCCESS).json(changes);
+        } else {
+            response.status(HTTP_STATUS.NO_CONTENT).send();
+        }
+    } catch (error) {
+        response.status(HTTP_STATUS.SERVER_ERROR).json(error);
+    }
+});
 
 module.exports = { router, reviewManager };

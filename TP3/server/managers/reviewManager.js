@@ -50,15 +50,19 @@ class ReviewManager {
      */
     async likeReview(reviewId) {
        // Increment the like count for the specified review
+       let isModified = false;
        const reviews = await this.getReviews();
-       const review = reviews.find(r => r.id === reviewId);
-       if (review) {
-           review.likes = (review.likes || 0) + 1;
-           // Save the updated reviews back to the file
-           await this.fileManager.writeFile(JSON.stringify(reviews, null, 2));
-           return true;
-       }
-       return false;
+       const modifiedReviews = reviews.map((review) => {
+              if (review.id === reviewId) {
+                review.likes = (review.likes || 0) + 1;
+                isModified = true;
+              }
+              return review;
+         });
+
+        // Save the updated reviews back to the file
+        await this.fileManager.writeFile(JSON.stringify(modifiedReviews, null, 2));
+        return isModified;
     }
 
     /**
