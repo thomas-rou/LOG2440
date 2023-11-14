@@ -6,6 +6,7 @@ const { PartnerManager } = require("../managers/partnerManager");
 const { ReviewManager } = require("../managers/reviewManager");
 
 const partnerManager = new PartnerManager(new FileManager(path.join(__dirname + "/../data/partners.json")));
+const reviewManager = new ReviewManager(new FileManager(path.join(__dirname + "/../data/reviews.json")));
 
 router.get("/", async (request, response) => {
     try {
@@ -50,8 +51,10 @@ router.get("/:id", async (request, response) => {
 */
 router.delete("/:id", async (request, response) => {
     try {
-        const deleted = await partnerManager.deletePartner(request.params.id);
-        if (deleted) {
+        const predicate = (review) => review.reviewedPartnerId === request.params.id;
+        const deletedReviews = await reviewManager.deleteReviewsMatchingPredicate(predicate);
+        const deletedPartner = await partnerManager.deletePartner(request.params.id);
+        if (deletedPartner && deletedReviews) {
             response.status(HTTP_STATUS.SUCCESS).send(true);
         } else {
             response.status(HTTP_STATUS.NOT_FOUND).send(false);
