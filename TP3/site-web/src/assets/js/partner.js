@@ -30,11 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 reviews.forEach(review => {
                     reviewsContainer.appendChild(createReviewElement(review));
                 });
-            } else {
-                throw new Error('réponse inattendue du serveur');
             }
         } catch (error) {
-            alert("Une erreur s'est produite lors du chargement des données du partenaire !");
+            alert("Une erreur s'est produite lors du chargement des données du partenaire ! - " + error.message);
         }
     }
     })();
@@ -61,7 +59,7 @@ submitButton.addEventListener('click', (e) => {
         window.alert("Votre revue a été soumise !");
         window.location.reload();
     } catch (error) {
-        alert("Échec de la soumission de la revue !");
+        alert("Échec de la soumission de la revue ! - " + error.message);
         window.location.href = '/error.html';
     }
     })();
@@ -81,7 +79,7 @@ deleteButton.addEventListener('click', (e) => {
             throw new Error('réponse inattendue du serveur');
         }
     } catch (error) {
-        alert("Impossible de supprimer les revues de l'étudiant !");
+        alert("Impossible de supprimer les revues de l'étudiant ! - " + error.message);
         window.location.href = '/error.html';
     }
     })();
@@ -162,7 +160,7 @@ function createReviewElement(review) {
             await httpManager.delete(`/api/review/${review.id}`);
             parent.remove();
         } catch (error) {
-            alert("Échec de la suppression de la revue !");
+            alert("Échec de la suppression de la revue ! - " + error.message);
         }
         })();
     });
