@@ -116,13 +116,13 @@ describe("Reviews API test", () => {
 
     // test supprimer une revue existante
     it("DELETE request to /api/review/:id should return 200 if review exists and review should be deleted", async () => {
-        const initialData = MOCK_DATA;
+        // const initialData = MOCK_DATA;
         jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
         const response = await request.delete(`${API_URL}/${MOCK_DATA[0].id}`);
         expect(response.status).toBe(HTTP_STATUS.SUCCESS);
         // expect(MOCK_DATA).not.toContain(initialData[0]);
         // ligne ci-dessus ne fonctionne pas car les objets ne sont pas identiques, pourtant le retrait est confirmé,
-        // mais ensuite le mock_data semble se réinitialiser
+        // mais ensuite le mock_data semble se réinitialiser. Fonctionne en test manuel
     });
 
     // test supprimer une revue inexistante

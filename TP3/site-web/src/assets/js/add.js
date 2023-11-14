@@ -12,7 +12,7 @@ submitButton.addEventListener('click', (e) => {
         const partnerProgram = document.getElementById('program');
         const partnerSchool = document.getElementById('school');
 
-        // TODO : Compléter la création de l'objet du partenaire
+        // Création de l'objet du partenaire
         const partner = {
             firstName: partnerFirstName.value,
             lastName: partnerLastName.value,
@@ -20,8 +20,8 @@ submitButton.addEventListener('click', (e) => {
             program: partnerProgram.value
         };
 
-        // TODO : Ajouter un nouveau partenaire à travers le serveur.
-        // TODO : Rediriger l'utilisateur vers index.html en cas de réussite ou /error.html en cas d'échec
+        // Ajouter un nouveau partenaire à travers le serveur.
+        // Rediriger l'utilisateur vers index.html en cas de réussite ou /error.html en cas d'échec
         try {
             const response = await httpManager.post('/api/partner', partner);
             if (response) {

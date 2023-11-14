@@ -6,16 +6,17 @@ class ReviewManager {
     }
 
     /**
-     * TODO : Récupérer les revues du fichier JSON
+     * Récupère les revues du fichier JSON
      * @returns {Object[]} la liste des revues du fichier JSON
      */
     async getReviews() {
         const reviewsData = await this.fileManager.readFile();
+
         return JSON.parse(reviewsData);
     }
 
     /**
-     * TODO : Rcupérer les revues pour un partenaire spécifique
+     * Récupère les revues pour un partenaire spécifique
      * @param {string} partnerId l'identifiant du partenaire
      * @returns {Object[]} la liste des revues pour un partenaire donné
      */
@@ -26,30 +27,29 @@ class ReviewManager {
     }
 
     /**
-     * TODO : Ajouter une nouvelle revue au fichier JSON
+     * Ajoute une nouvelle revue au fichier JSON
      * @param {Object} review la revue à ajouter
      * @returns {Object[]} la nouvelle liste de revues
      */
     async addReview(review) {
-        // ID généré aléatoirement
         review.id = randomUUID();
         review.likes = 0;
         review.date = new Date().toISOString().split("T")[0];
 
         const reviews = await this.getReviews();
         reviews.push(review);
+
         await this.fileManager.writeFile(JSON.stringify(reviews, null, 2));
 
         return reviews;
     }
 
     /**
-     * TODO : Incrémenter le compter de "likes" d'une revue et mettre à jour le fichier
+     * Incrémente le compter de "likes" d'une revue et mettre à jour le fichier
      * @param {string} reviewId identifiant de la revue
      * @returns {boolean} true si la revue existe, false sinon
      */
     async likeReview(reviewId) {
-       // Increment the like count for the specified review
        const reviews = await this.getReviews();
        const initialLikes = reviews.reduce((total, review) => total + (review.likes || 0), 0);
        const modifiedReviews = reviews.map((review) => {
@@ -60,7 +60,6 @@ class ReviewManager {
          });
          const currentLikes = modifiedReviews.reduce((total, review) => total + (review.likes || 0), 0);
 
-        // Save the updated reviews back to the file
         await this.fileManager.writeFile(JSON.stringify(modifiedReviews, null, 2));
 
         return currentLikes > initialLikes;

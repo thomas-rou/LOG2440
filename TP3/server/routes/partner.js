@@ -22,7 +22,7 @@ router.get("/", async (request, response) => {
     }
 });
 
-/* TODO : Ajouter les routes nécessaires pour compléter les fonctionnalitées suivantes :
+/* Ajouter les routes nécessaires pour compléter les fonctionnalitées suivantes :
     - Obtenir un partenaire en fonction de son identifiant
     - Supprimer un partenaire en fonction de son identifiant ET supprimer toutes les revues pour ce partenaire
     - Ajouter un nouveau partenaire
@@ -30,8 +30,8 @@ router.get("/", async (request, response) => {
     Note : utilisez les méthodes HTTP et les codes de retour appropriés
 */
 
-/*
- * Obtenir un partenaire en fonction de son identifiant
+/**
+ * Route obtenir un partenaire en fonction de son identifiant
 */
 router.get("/:id", async (request, response) => {
     try {
@@ -46,8 +46,8 @@ router.get("/:id", async (request, response) => {
     }
 });
 
-/*
- * Supprimer un partenaire en fonction de son identifiant ET supprimer toutes les revues pour ce partenaire
+/**
+ * Route supprimer d'un partenaire en fonction de son identifiant ET supprimer toutes les revues pour ce partenaire
 */
 router.delete("/:id", async (request, response) => {
     try {
@@ -64,8 +64,8 @@ router.delete("/:id", async (request, response) => {
     }
 });
 
-/*
- * Ajouter un nouveau partenaire
+/**
+ * Route ajouter un nouveau partenaire
 */
 router.post("/", async (request, response) => {
     try {
@@ -76,13 +76,9 @@ router.post("/", async (request, response) => {
 
         const newPartner = await partnerManager.addPartner(request.body);
         response.status(HTTP_STATUS.CREATED).json(newPartner);
-
     } catch (error) {
         response.status(HTTP_STATUS.SERVER_ERROR).json({ error: error.message });
     }
 });
-
-
-
 
 module.exports = { router, partnerManager };

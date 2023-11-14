@@ -8,7 +8,7 @@ const requestLogger = async (req, res, next) => {
     try {
         const logMessage = `${new Date().toLocaleString()} - ${req.method} - ${req.path}`;
 
-        // TODO : mettre à jour le fichier de journalisation et compléter le Middleware
+        // met à jour le fichier de journalisation et compléter le Middleware
         await logsManager.writeLog(logMessage);
         next();
     } catch (error) {

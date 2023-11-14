@@ -34,7 +34,7 @@ router.get("/:partnerId", async (request, response) => {
     }
 });
 
-/* TODO : Ajouter les routes nécessaires pour compléter les fonctionnalitées suivantes :
+/* Ajouter les routes nécessaires pour compléter les fonctionnalitées suivantes :
     - Incrémenter le compteur de "likes" d'une revue en fonction de son identifiant
     - Supprimer une revue en fonction de son identifant
     - Ajouter une nouvelle revue seulement après avoir validé que tous les éléments nécessaires sont envoyés
@@ -42,7 +42,9 @@ router.get("/:partnerId", async (request, response) => {
     Note : utilisez les méthodes HTTP et les codes de retour appropriés
 */
 
-// routes compteur de likes d'une revue en fonction de son identifiant
+/**
+ * Route incrémenter le compteur de "likes" d'une revue en fonction de son identifiant
+ */
 router.patch("/:reviewId", async (request, response) => {
     try {
         const changes = await reviewManager.likeReview(request.params.reviewId);
@@ -57,7 +59,9 @@ router.patch("/:reviewId", async (request, response) => {
     }
 });
 
-// routes supprimer une revue en fonction de son identifant
+/**
+ * Route supprimer une revue en fonction de son identifant
+ */
 router.delete("/:reviewId", async (request, response) => {
     try {
         const predicate = (review) => review.id === request.params.reviewId;
@@ -73,10 +77,11 @@ router.delete("/:reviewId", async (request, response) => {
     }
 });
 
-// routes ajouter une nouvelle revue seulement après avoir validé que tous les éléments nécessaires sont envoyés
+/**
+ * Route ajouter une nouvelle revue seulement après avoir validé que tous les éléments nécessaires sont envoyés
+ */
 router.post("/", async (request, response) => {
     const review = request.body;
-    // valider que tous les éléments nécessaires sont envoyés (reviewedPartnerId, author, comment, rating)
     try {
         if (!review.reviewedPartnerId || !review.author || !review.comment || !review.rating) {
             response.status(HTTP_STATUS.BAD_REQUEST).send('Missing required fields');

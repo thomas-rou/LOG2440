@@ -45,7 +45,7 @@ class HTTPManager {
         }
     }
 
-    // TODO : Implémenter les autres méthodes HTTP nécessaires
+    // Implémentation des autres méthodes HTTP nécessaires
     async put(endpoint, body) {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
@@ -76,6 +76,7 @@ class HTTPManager {
             throw error;
         }
     }
+
     async patch(endpoint, body) {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
