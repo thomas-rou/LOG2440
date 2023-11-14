@@ -79,20 +79,21 @@ deleteButton.addEventListener('click', async (e) => {
     // TODO : Supprimer toutes les revues pour le partenaire
     try {
         // Send a DELETE request to the server to delete all reviews for the partner
-        const response = await httpManager.delete(`/api/review/${partnerId}`);
+        const response = await httpManager.delete(`/api/review/partner/${partnerId}`);
 
-        // Check if the response status code is 200 (OK) or 204 (No Content)
-        if (response.ok) {
+        // Since the handleResponse method returns null for a 204 No Content, 
+        // the response will be undefined if the operation was successful with no content.
+        if (response === undefined) {
             window.alert("Toutes les revues de l'étudiant ont été supprimées !");
             window.location.reload(); // Reload the page to reflect the changes
         } else {
-            // If the server response is not OK, alert the user
-            throw new Error(`Échec de la suppression des revues: ${response.status}`);
+            // If the response is not undefined, handle it as an error
+            throw new Error('Unexpected response from the server.');
         }
     } catch (error) {
         // Log the error and alert the user
         console.error("Failed to delete all reviews for the partner:", error);
-        alert("Impossible de supprimer les revues tres complete de l'étudiant !");
+        alert("Impossible de supprimer les revues de l'étudiant !");
     }
 });
 
@@ -129,12 +130,10 @@ function createReviewElement(review) {
     likeBtn.textContent = '👍';
 
     // TODO : Envoyer une demande d'incrémentation des "like" de la revue et mettre à jour la vue avec la nouvelle valeur
-    // likeBtn.addEventListener('click', async (e) => { });
-    // parent.appendChild(likeBtn);
 
     likeBtn.addEventListener('click', async () => {
         try {
-            const updatedReview = await httpManager.post(`/api/review/${review.id}/like`);
+            const updatedReview = await httpManager.patch(`/api/review/${review.id}`);
             if (updatedReview) {
                 likes.textContent = `Likes: ${updatedReview.likes}`;
             }
@@ -144,30 +143,18 @@ function createReviewElement(review) {
     });
     parent.appendChild(likeBtn);
 
+    // TODO : Supprimer une revue et mettre à jour la vue
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = "X";
 
     deleteBtn.addEventListener('click', async () => {
         try {
-            await httpManager.delete(`/api/reviews/${review.id}`);
+            await httpManager.delete(`/api/review/${review.id}`);
             parent.remove(); // Remove the review element from the page
         } catch (error) {
             console.error("Failed to delete review:", error);
         }
     });
-
-    // TODO : Supprimer une revue et mettre à jour la vue
-    /*
-    deleteBtn.addEventListener('click', async (e) => {
-        try {
-            await httpManager.delete(`/api/partners/${partnerId}/reviews`);
-            window.alert("Toutes les revues de l'étudiant ont été supprimées !");
-            window.location.reload(); // Refresh the page to reflect the changes
-        } catch (error) {
-            console.error("Failed to delete all reviews for the partner:", error);
-            alert("Impossible de supprimer les revues de l'étudiant !");
-        }
-     });*/
 
     parent.appendChild(deleteBtn);
 
