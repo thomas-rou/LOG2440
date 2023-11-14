@@ -52,9 +52,9 @@ router.delete("/:id", async (request, response) => {
     try {
         const deleted = await partnerManager.deletePartner(request.params.id);
         if (deleted) {
-            response.status(HTTP_STATUS.SUCCESS).send('Partner deleted');
+            response.status(HTTP_STATUS.SUCCESS).send(true);
         } else {
-            response.status(HTTP_STATUS.NOT_FOUND).send('Partner not found');
+            response.status(HTTP_STATUS.NOT_FOUND).send(false);
         }
     } catch (error) {
         response.status(HTTP_STATUS.SERVER_ERROR).json({ error: error.message });

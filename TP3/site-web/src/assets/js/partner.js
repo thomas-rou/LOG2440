@@ -79,19 +79,20 @@ deleteButton.addEventListener('click', async (e) => {
     // TODO : Supprimer toutes les revues pour le partenaire
     try {
         // Send a DELETE request to the server to delete all reviews for the partner
-        const response = await httpManager.delete(`/api/review/partner/${partnerId}`);
+        const response = await httpManager.delete(`/api/partner/${partnerId}`);
 
         // Since the handleResponse method returns null for a 204 No Content, 
         // the response will be undefined if the operation was successful with no content.
-        if (response === undefined) {
+        if (response === true) {
+            window.location.href = '/index.html';
             window.alert("Toutes les revues de l'étudiant ont été supprimées !");
-            window.location.reload(); // Reload the page to reflect the changes
+            
+             // Reload the page to reflect the changes
         } else {
             // If the response is not undefined, handle it as an error
             throw new Error('Unexpected response from the server.');
         }
     } catch (error) {
-        // Log the error and alert the user
         console.error("Failed to delete all reviews for the partner:", error);
         alert("Impossible de supprimer les revues de l'étudiant !");
     }
