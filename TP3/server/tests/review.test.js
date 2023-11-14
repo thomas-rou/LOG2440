@@ -88,9 +88,30 @@ describe("Reviews API test", () => {
     it("PATCH request to /api/review/:id should return 200 if review exists and like counter should be incremented", async () => {
         const initialLikes = MOCK_DATA[1].likes;
         jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
-        const response = await request.patch(`${API_URL}/${MOCK_DATA[1].id}`);
+        const response = await request.patch(`${API_URL}/${MOCK_DATA[1].id}`).send({ content: "like" });
         expect(response.status).toBe(HTTP_STATUS.SUCCESS);
         expect(MOCK_DATA[1].likes).toBe(initialLikes + 1);
+    });
+
+    // test decrementer le compteur de likes d'une revue existante
+    it("PATCH request to /api/review/:id should return 200 if review exists and like counter should be decremented", async () => {
+        const initialLikes = MOCK_DATA[1].likes;
+        jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
+        const response = await request.patch(`${API_URL}/${MOCK_DATA[1].id}`).send({ content: "dislike" });
+        expect(response.status).toBe(HTTP_STATUS.SUCCESS);
+        expect(MOCK_DATA[1].likes).toBe(initialLikes - 1);
+    });
+
+    // test decrementer le compteur de likes d'une revue existante avec compteur à 0
+    it("PATCH request to /api/review/:id should return 200 if review exists and like counter should not be decremented", async () => {
+        const initialLikes = MOCK_DATA[1].likes;
+        jest.spyOn(reviewManager, "getReviews").mockImplementation(() => Promise.resolve(MOCK_DATA));
+        const response = await request.patch(`${API_URL}/${MOCK_DATA[1].id}`).send({ content: "dislike" });
+        expect(response.status).toBe(HTTP_STATUS.SUCCESS);
+        expect(MOCK_DATA[1].likes).toBe(initialLikes - 1);
+        const response2 = await request.patch(`${API_URL}/${MOCK_DATA[1].id}`).send({ content: "dislike" });
+        expect(response2.status).toBe(HTTP_STATUS.SUCCESS);
+        expect(MOCK_DATA[1].likes).toBe(0);
     });
 
     // test incrementer le compteur de likes d'une revue inexistante

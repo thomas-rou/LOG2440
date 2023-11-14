@@ -47,7 +47,7 @@ router.get("/:partnerId", async (request, response) => {
  */
 router.patch("/:reviewId", async (request, response) => {
     try {
-        const changes = await reviewManager.likeReview(request.params.reviewId);
+        const changes = await reviewManager.likeReview(request.params.reviewId, request.body.content);
 
         if (changes) {
             response.status(HTTP_STATUS.SUCCESS).json(changes);

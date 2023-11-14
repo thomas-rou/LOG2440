@@ -119,12 +119,14 @@ function createReviewElement(review) {
     const likeBtn = document.createElement('button');
     likeBtn.textContent = '👍';
 
-    // Envoyer une demande d'incrémentation des "like" de la revue et mettre à jour la vue avec la nouvelle valeur
+    const dislikeBtn = document.createElement('button');
+    dislikeBtn.textContent = '👎';
 
+    // Envoyer une demande d'incrémentation des "like" de la revue et mettre à jour la vue avec la nouvelle valeur
     likeBtn.addEventListener('click', () => {
         (async () => {
         try {
-            const updatedReview = await httpManager.patch(`/api/review/${review.id}`);
+            const updatedReview = await httpManager.patch(`/api/review/${review.id}`, { content: 'like' });
             if (updatedReview) {
                 window.location.reload();
             }
@@ -134,6 +136,21 @@ function createReviewElement(review) {
         })();
     });
     parent.appendChild(likeBtn);
+
+    // Envoyer une demande de décrémentation des "like" de la revue et mettre à jour la vue avec la nouvelle valeur
+    dislikeBtn.addEventListener('click', () => {
+        (async () => {
+        try {
+            const updatedReview = await httpManager.patch(`/api/review/${review.id}`, { content: 'dislike' });
+            if (updatedReview) {
+                window.location.reload();
+            }
+        } catch (error) {
+            alert("Échec de la décrémentation des likes !");
+        }
+        })();
+    });
+    parent.appendChild(dislikeBtn);
 
     // Supprimer une revue et mettre à jour la vue
     const deleteBtn = document.createElement('button');

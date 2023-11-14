@@ -49,20 +49,36 @@ class ReviewManager {
      * @param {string} reviewId identifiant de la revue
      * @returns {boolean} true si la revue existe, false sinon
      */
-    async likeReview(reviewId) {
-       const reviews = await this.getReviews();
-       const initialLikes = reviews.reduce((total, review) => total + (review.likes || 0), 0);
-       const modifiedReviews = reviews.map((review) => {
-              if (review.id === reviewId) {
-                review.likes = (review.likes || 0) + 1;
-              }
-              return review;
-         });
-         const currentLikes = modifiedReviews.reduce((total, review) => total + (review.likes || 0), 0);
+    async likeReview(reviewId, content) {
+        if (content === 'like') {
+        const reviews = await this.getReviews();
+        const initialLikes = reviews.reduce((total, review) => total + (review.likes || 0), 0);
+        const modifiedReviews = reviews.map((review) => {
+                if (review.id === reviewId) {
+                    review.likes = (review.likes || 0) + 1;
+                }
+                return review;
+        });
+        const currentLikes = modifiedReviews.reduce((total, review) => total + (review.likes || 0), 0);
 
         await this.fileManager.writeFile(JSON.stringify(modifiedReviews, null, 2));
 
         return currentLikes > initialLikes;
+        } else if (content === 'dislike') {
+            const reviews = await this.getReviews();
+            const initialLikes = reviews.reduce((total, review) => total + (review.likes || 0), 0);
+            const modifiedReviews = reviews.map((review) => {
+                    if (review.id === reviewId && review.likes > 0) {
+                        review.likes = (review.likes || 0) - 1;
+                    }
+                    return review;
+            });
+            const currentLikes = modifiedReviews.reduce((total, review) => total + (review.likes || 0), 0);
+
+            await this.fileManager.writeFile(JSON.stringify(modifiedReviews, null, 2));
+
+            return currentLikes <= initialLikes;
+        }
     }
 
     /**
