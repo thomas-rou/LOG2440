@@ -16,9 +16,11 @@ async function loadPartners() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const partnersList = await loadPartners();
-    generateHTML(partnersList);
+document.addEventListener('DOMContentLoaded', () => {
+    (async () => {
+        const partnersList = await loadPartners();
+        generateHTML(partnersList);
+    })();
 });
 
 const partnersList = await loadPartners();

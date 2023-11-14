@@ -12,7 +12,8 @@ const submitButton = document.getElementById('submit-btn');
 const deleteButton = document.getElementById('delete-btn');
 
 // Récupérer le partenaire à travers l'identifiant dans l'URL
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
+    (async () => {
     if (partnerId) {
         try {
             const partner = await httpManager.get(`/api/partner/${partnerId}`);
@@ -36,10 +37,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert("Une erreur s'est produite lors du chargement des données du partenaire !");
         }
     }
+    })();
 });
 
-submitButton.addEventListener('click', async (e) => {
+submitButton.addEventListener('click', (e) => {
     e.preventDefault();
+    (async () => {
     const rating = document.getElementById('rate');
     const comment = document.getElementById('comment');
     const author = document.getElementById('author');
@@ -61,11 +64,12 @@ submitButton.addEventListener('click', async (e) => {
         alert("Échec de la soumission de la revue !");
         window.location.href = '/error.html';
     }
+    })();
 });
 
-deleteButton.addEventListener('click', async (e) => {
+deleteButton.addEventListener('click', (e) => {
     e.preventDefault();
-
+    (async () => {
     // Supprimer toutes les revues pour le partenaire
     try {
         const response = await httpManager.delete(`/api/partner/${partnerId}`);
@@ -80,6 +84,7 @@ deleteButton.addEventListener('click', async (e) => {
         alert("Impossible de supprimer les revues de l'étudiant !");
         window.location.href = '/error.html';
     }
+    })();
 });
 
 function createReviewElement(review) {
@@ -116,7 +121,8 @@ function createReviewElement(review) {
 
     // Envoyer une demande d'incrémentation des "like" de la revue et mettre à jour la vue avec la nouvelle valeur
 
-    likeBtn.addEventListener('click', async () => {
+    likeBtn.addEventListener('click', () => {
+        (async () => {
         try {
             const updatedReview = await httpManager.patch(`/api/review/${review.id}`);
             if (updatedReview) {
@@ -125,6 +131,7 @@ function createReviewElement(review) {
         } catch (error) {
             alert("Échec de l'incrémentation des likes !");
         }
+        })();
     });
     parent.appendChild(likeBtn);
 
@@ -132,13 +139,15 @@ function createReviewElement(review) {
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = "X";
 
-    deleteBtn.addEventListener('click', async () => {
+    deleteBtn.addEventListener('click', () => {
+        (async () => {
         try {
             await httpManager.delete(`/api/review/${review.id}`);
             parent.remove();
         } catch (error) {
             alert("Échec de la suppression de la revue !");
         }
+        })();
     });
 
     parent.appendChild(deleteBtn);

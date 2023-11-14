@@ -1,4 +1,4 @@
-// TODO : Récupérer les bons éléments des fichiers externes
+// Récupérer les bons éléments des fichiers externes
 import HTTPManager from "./HTTPManager.js";
 import SERVER_URL from "./consts.js";
 
