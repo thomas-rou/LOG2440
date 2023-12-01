@@ -9,6 +9,10 @@ class DatabaseService {
    */
   async populateDb(collectionName, data) {
     const collection = this.db.collection(collectionName);
+    const count = await collection.countDocuments();
+    if (count === 0) {
+      await collection.insertMany(data);
+    }
   }
 
   // Méthode pour établir la connection entre le serveur Express et la base de données MongoDB
