@@ -22,7 +22,9 @@ class SongService {
    * @returns {Promise<Array>}
    */
   async getAllSongs () {
-    return [];
+    const collection = this.collection;
+    const songs = await collection.find().toArray();
+    return songs;
   }
 
   /**
@@ -33,7 +35,9 @@ class SongService {
    * @returns chanson correspondant à l'id
    */
   async getSongById (id) {
-    return { id: -1 };
+    const collection = this.collection;
+    const song = await collection.findOne({ id });
+    return song;
   }
 
   /**
@@ -44,7 +48,12 @@ class SongService {
    * @returns {boolean} le nouveau état aimé de la chanson
    */
   async updateSongLike (id) {
-    return false;
+    const song = await this.getSongById(id);
+    const newLike = !song.liked;
+    const filter = { id };
+    const update = { $set: { liked: newLike } };
+    const updatedSong = await this.collection.findOneAndUpdate(filter, update);
+    return updatedSong.liked;
   }
 
   /**
@@ -59,7 +68,13 @@ class SongService {
    * @returns toutes les chansons qui ont le mot clé cherché dans leur contenu (name, artist, genre)
    */
   async search (substring, exact) {
-    const filter = { name: { $regex: `${substring}`, $options: "i" } };
+    let filter;
+    if (exact) {
+      filter = { $or: [{ name: { $regex: `${substring}` } }, { artist: { $regex: `${substring}` } }, { genre: { $regex: `${substring}` } }] };
+    } else {
+      filter = { $or: [{ name: { $regex: `${substring}`, $options: "i" } }, { artist: { $regex: `${substring}`, $options: "i" } }, { genre: { $regex: `${substring}`, $options: "i" } }] };
+    }
+
     const songs = await this.collection.find(filter).toArray();
     return songs;
   }
