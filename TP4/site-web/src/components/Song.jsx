@@ -8,12 +8,12 @@ export default function Song({ song, index }) {
   const [liked, setLiked] = useState(song.liked);
   const api = useContext(PlaylistContext).api;
   const toggleLike = () => {
-    setLiked(!liked);
-    api.updateSongLike(song.id);
+      setLiked(!liked);
+      api.updateSong(song.id);
   };
 
   const playSong = () => {
-    dispatch({ type: ACTIONS.PLAY, payload: { index: - 1 } });
+    dispatch({ type: ACTIONS.PLAY, payload: { index: index - 1 } });
   };
   return (
     <section
@@ -30,12 +30,12 @@ export default function Song({ song, index }) {
       <p>{song.artist}</p>
 
       {/*TODO : modifier le statut aimé seulement si index n'existe pas */}
-      {index === undefined && (
         <button
           className={`${liked ? "fa" : "fa-regular"} fa-2x fa-heart`}
-          onClick={toggleLike}
+          onClick={() => {
+            if (index === undefined) toggleLike();
+          }}
         ></button>
-      )}
     </section>
   );
 }

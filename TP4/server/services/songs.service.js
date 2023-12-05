@@ -35,8 +35,8 @@ class SongService {
    * @returns chanson correspondant à l'id
    */
   async getSongById (id) {
-    const collection = this.collection;
-    const song = await collection.findOne({ id });
+    const songs = await this.getAllSongs();
+    const song = songs.filter(song => song.id === id)[0];
     return song;
   }
 
