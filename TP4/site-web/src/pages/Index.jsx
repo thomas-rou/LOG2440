@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import Playlist from "../components/Playlist";
 import PlaylistContext from "../contexts/PlaylistContext";
+import Song from "../components/Song";
+import SearchBar from "../components/SearchBar";
 
 export default function Index() {
 
@@ -13,7 +15,8 @@ export default function Index() {
       .then((playlists) => setPlaylists(playlists))
       .catch(() => setPlaylists([]));
     // TODO : récupérer les chansons du serveur
-    api.getAllSongs()
+    api
+    .fetchAllSongs()
     .then((songs) => setSongs(songs))
     .catch(() => setSongs([]));
 }, [api]);
@@ -42,7 +45,7 @@ export default function Index() {
   return (
     <>
       <main id="main-area" className="flex-column">
-        {/*TODO : ajouter la barre de recherche*/}
+        <SearchBar handleSearch={handleSearch} />
         <div id="playlist-list">
           <h1>Mes Playlists</h1>
           <section id="playlist-container" className="playlist-container">
@@ -53,12 +56,9 @@ export default function Index() {
         </div>
         <div id="songs-list">
           <h1>Mes Chansons</h1>
-          {/*TODO : afficher les chansons dans la page*/}
-          <section className="song-container">
           {songs.map((song) => (
             <Song key={song.id} song={song} />
           ))}
-          </section>
         </div>
       </main>
     </>
