@@ -9,7 +9,7 @@ export default function Song({ song, index }) {
   const api = useContext(PlaylistContext).api;
   const toggleLike = () => {
     setLiked(!liked);
-    api.updateSong(song.id);
+    api.updateSongLike(song.id);
   };
 
   const playSong = () => {
