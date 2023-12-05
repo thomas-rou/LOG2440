@@ -33,12 +33,7 @@ export default function Player() {
 
   // TODO : ajouter une action d'avancement/recul dans la chanson
   const scrubTime = (delta) => {
-    let newTime = state.audio.currentTime + delta;
-    newTime = Math.max(0, Math.min(newTime, state.audio.duration)); // Assurez-vous que le temps reste dans les limites de la durée de la chanson
-    state.audio.currentTime = newTime;
-    setCurrentTime(formatTime(newTime)); // Mettez à jour l'affichage du temps actuel
-    const newPosition = (100 * newTime) / state.audio.duration; // Calculez la nouvelle position pour la barre de progression
-    setTimeLine(newPosition);
+    dispatch({ type: ACTIONS.SCRUB, payload: { delta } });
   };
 
   // TODO : ajouter une action de fermer/ouvrir le son
@@ -134,7 +129,7 @@ export default function Player() {
             max="100"
             value={timeLine}
             onInput={(e) => {
-              const newTime = (e.target.value / 100) * state.audio.duration;
+              const newTime = (e.target.value);
               seek(newTime);
             }}
           />
