@@ -50,7 +50,7 @@ export default function CreatePlaylist() {
       // Création d'une nouvelle playlist
       await api.addNewPlaylist(data);
     }
-  
+
     navigate("/index");
   };
 
@@ -166,7 +166,6 @@ export default function CreatePlaylist() {
         </div>
         <fieldset className="form-control">
           <legend>Chansons</legend>
-          {/*TODO : construire les choix de chansons dans des éléments <option> */}
           <datalist id="song-dataList">
             {songs.map((song, index) => (
               <option key={index} value={song.name} />
@@ -196,6 +195,7 @@ export default function CreatePlaylist() {
           type="submit"
           value={params.id ? "Modifier la playlist" : "Ajouter la playlist"}
           id="playlist-submit"
+          onClick={handleSubmit}
         />
       </form>
       {params.id ? (
