@@ -24,9 +24,12 @@ function App() {
       <PlaylistProvider>
         <NavBar />
         <Routes>
-          {/* TODO : Configurer les routes et leurs components à afficher */}
           <Route path={routes[0].path} element={routes[0].element} />
           <Route path={routes[1].path} element={routes[1].element} />
+          <Route path={routes[2].path} element={routes[2].element} />
+          <Route path={routes[3].path} element={routes[3].element} />
+          <Route path={routes[4].path} element={routes[4].element} />
+          <Route path={routes[5].path} element={routes[5].element} />
         </Routes>
         <Footer />
       </PlaylistProvider>
