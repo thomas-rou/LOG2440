@@ -13,21 +13,19 @@ export default function Playlist() {
   const { dispatch } = useContext(PlaylistContext);
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const playlist = await api.getPlaylistById(params.id);
-    const songsToLoad = await Promise.all(
-      playlist.songs.map(async (song) => {
-        return await api.fetchSong(song.id);
-      })
-    );
-    setPlaylist(playlist);
-    setSongs(songsToLoad);
+    const fetchData = async () => {
+      const fetchedPlaylist = await api.getPlaylistById(params.id);
+      const songsToLoad = await Promise.all(
+        fetchedPlaylist.songs.map(async (song) => await api.fetchSong(song.id))
+      );
+      setPlaylist(fetchedPlaylist);
+      setSongs(songsToLoad);
     // TODO : charger les bonnes données dans votre reducer
-    dispatch({ type: "TODO" });
+    dispatch({ type: ACTIONS.LOAD, payload: { songs: songsToLoad } });
   };
+
+  fetchData();
+}, [params.id, api, dispatch]);
 
   return (
     <main id="main-area" className="flex-column">
@@ -48,7 +46,9 @@ export default function Playlist() {
         <section id="song-container" className="flex-column">
           {/*TODO : afficher toutes les chansons dans la page.
           Chaque chanson doit avoir un numéro commençant par 1 qui indique son ordre dans la liste*/}
-          <Song song={{ name: 'todo', genre: 'todi' }} index={-1} />
+          {songs.map((song, index) => (
+            <Song key={song.id} song={song} index={index + 1} />
+          ))}
         </section>
       </div>
     </main>

@@ -13,7 +13,10 @@ export default function Index() {
       .then((playlists) => setPlaylists(playlists))
       .catch(() => setPlaylists([]));
     // TODO : récupérer les chansons du serveur
-  }, []);
+    api.getAllSongs()
+    .then((songs) => setSongs(songs))
+    .catch(() => setSongs([]));
+}, [api]);
 
   /**
    * TODO : implémenter la recherche et la mise à jour de l'interface
@@ -26,6 +29,14 @@ export default function Index() {
   const handleSearch = async (event, query, exactMatch) => {
     event.preventDefault();
     // TODO : implémenter la recherche et la mise à jour de l'interface
+    try {
+      const searchResults = await api.search(query, exactMatch);
+      setPlaylists(searchResults.playlists);
+      setSongs(searchResults.songs);
+    } catch (error) {
+      // Gestion des erreurs
+      console.error("Erreur lors de la recherche :", error);
+    }
   };
 
   return (
@@ -43,6 +54,11 @@ export default function Index() {
         <div id="songs-list">
           <h1>Mes Chansons</h1>
           {/*TODO : afficher les chansons dans la page*/}
+          <section className="song-container">
+          {songs.map((song) => (
+            <Song key={song.id} song={song} />
+          ))}
+          </section>
         </div>
       </main>
     </>

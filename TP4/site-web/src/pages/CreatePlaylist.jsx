@@ -41,7 +41,16 @@ export default function CreatePlaylist() {
     event.preventDefault();
     if (!data.name || !data.description) return;
     // TODO : envoyer la bonne requête pour ajouter ou modifier une playlist en fonction de l'attribut params.id
+    if (!data.name || !data.description) return;
 
+    if (params.id) {
+      // Mise à jour d'une playlist existante
+      await api.updatePlaylist({ ...data, id: params.id });
+    } else {
+      // Création d'une nouvelle playlist
+      await api.addNewPlaylist(data);
+    }
+  
     navigate("/index");
   };
 
@@ -98,7 +107,9 @@ export default function CreatePlaylist() {
   };
 
   // TODO : Gérer le changement de nom
-  const handleNameChange = (event) => { };
+  const handleNameChange = (event) => {
+    setData({ ...data, name: event.target.value });
+  };
 
   const handleDescriptionChange = (event) => {
     setData({ ...data, description: event.target.value });
@@ -112,6 +123,7 @@ export default function CreatePlaylist() {
 
   // TODO : Envoyer une requête de supression au serveur et naviguer vers la page principale
   const deletePlaylist = async (id) => {
+    await api.deletePlaylist(id);
     navigate("/index");
   };
 
@@ -127,8 +139,8 @@ export default function CreatePlaylist() {
               <input
                 type="text"
                 id="name"
-                placeholder="Playlist#1"
-                value={"TODO: nom de la playlist"}
+                placeholder="Nom de la playlist"
+                value={data.name}
                 required
                 onChange={handleNameChange}
               />
@@ -139,8 +151,8 @@ export default function CreatePlaylist() {
               <input
                 type="text"
                 id="description"
-                placeholder="Nouvelle playlist"
-                value={"TODO: description de la playlist"}
+                placeholder="Description de la playlist"
+                value={data.description}
                 required
                 onChange={handleDescriptionChange}
               />
@@ -156,7 +168,9 @@ export default function CreatePlaylist() {
           <legend>Chansons</legend>
           {/*TODO : construire les choix de chansons dans des éléments <option> */}
           <datalist id="song-dataList">
-            <option value={"Whip"} />
+            {songs.map((song, index) => (
+              <option key={index} value={song.name} />
+            ))}
           </datalist>
           <button id="add-song-btn" className="fa fa-plus" onClick={addItemSelect}></button>
           <div id="song-list">
@@ -180,8 +194,7 @@ export default function CreatePlaylist() {
         {/*TODO : afficher "Modifier la playlist" ou "Ajouter la playlist" en fonction de l'état du formulaire */}
         <input
           type="submit"
-          value={"Ajouter la playlist"}
-          onClick={handleSubmit}
+          value={params.id ? "Modifier la playlist" : "Ajouter la playlist"}
           id="playlist-submit"
         />
       </form>

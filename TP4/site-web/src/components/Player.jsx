@@ -17,22 +17,39 @@ export default function Player() {
   };
 
   // TODO : ajouter une action de jouer la prochaine chanson
-  const playNextSong = () => { };
+  const playNextSong = () => {
+    dispatch({ type: ACTIONS.NEXT });
+  };
 
   // TODO : ajouter une action de jouer la chanson précédante
-  const playPreviousSong = () => { };
+  const playPreviousSong = () => {
+    dispatch({ type: ACTIONS.PREVIOUS });
+  };
 
   // TODO : ajouter une action de déplacement dans la barre de progrès
-  const seek = (newTime) => { };
+  const seek = (newTime) => {
+    dispatch({ type: ACTIONS.SEEK, payload: { time: newTime } });
+  };
 
   // TODO : ajouter une action d'avancement/recul dans la chanson
-  const scrubTime = (delta) => { };
+  const scrubTime = (delta) => {
+    let newTime = state.audio.currentTime + delta;
+    newTime = Math.max(0, Math.min(newTime, state.audio.duration)); // Assurez-vous que le temps reste dans les limites de la durée de la chanson
+    state.audio.currentTime = newTime;
+    setCurrentTime(formatTime(newTime)); // Mettez à jour l'affichage du temps actuel
+    const newPosition = (100 * newTime) / state.audio.duration; // Calculez la nouvelle position pour la barre de progression
+    setTimeLine(newPosition);
+  };
 
   // TODO : ajouter une action de fermer/ouvrir le son
-  const muteToggle = () => { };
+  const muteToggle = () => {
+    dispatch({ type: ACTIONS.MUTE });
+  };
 
   // TODO : ajouter une action d'activer ou désactiver le mode "shuffle"
-  const shuffleToggle = () => { };
+  const shuffleToggle = () => {
+    dispatch({ type: ACTIONS.SHUFFLE });
+  };
 
   const shortcutHandler = (event) => {
     if (shortcuts.has(event.key)) {
@@ -79,18 +96,18 @@ export default function Player() {
           <button
             className="control-btn fa fa-2x fa-arrow-left"
             id="previous"
-            onClick={() => { }}
+            onClick={playPreviousSong}
           ></button>
           <button
             className={`control-btn fa fa-2x ${state.audio.paused ? "fa-play" : "fa-pause"}`}
             id="play"
-            onClick={() => { }}
+            onClick={playSong}
           ></button>
           {/*TODO : gérer l'événement 'click' */}
           <button
             className="control-btn fa fa-2x fa-arrow-right"
             id="next"
-            onClick={() => { }}
+            onClick={playNextSong}
           ></button>
           <button
             className={`${state.shuffle ? "control-btn-toggled" : ""} control-btn fa fa-2x fa-shuffle`}
@@ -109,15 +126,16 @@ export default function Player() {
         </section>
         <section id="timeline-container" className="flex-row">
           {/*TODO : afficher le temps en cours de la chanson */}
-          <span id="timeline-current">{"TODO : temps"}</span>
+          <span id="timeline-current">{currentTime}</span>
           {/*TODO : afficher le progrès de la chanson */}
           <input
             id="timeline"
             type="range"
             max="100"
-            value={0}
+            value={timeLine}
             onInput={(e) => {
-              seek(e.target.value);
+              const newTime = (e.target.value / 100) * state.audio.duration;
+              seek(newTime);
             }}
           />
           <span id="timeline-end">{state.audio.duration ? formatTime(state.audio.duration) : "5:00"}</span>
@@ -125,4 +143,4 @@ export default function Player() {
       </div>
     </>
   );
-}
+}// 00:00 au lieu de 5:00 a voir
