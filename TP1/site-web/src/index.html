@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/img/favico.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,600&family=Roboto:ital,wght@0,400;0,500;1,300;1,400;1,500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <title>PolyPlay</title>
+</head>
+
+<body>
+  <header>
+    <td style="display: flex; align-items: center;">
+      <nav id="nav-bar" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./index.html"><img class="header-logo" src="./assets/img/logo-polyflix.png" alt="Logo Polyflix"/></a></li>
+          <li><a href="./admin.html" class="other-pages">Admin</a></li>
+          <li><a href="./about.html" class="other-pages">À propos</a></li>
+        </ul>
+      </nav>
+    </td>
+
+    <td style="text-align: right;">
+      <nav id="nav-search" aria-label="Search Navigation">
+        <form id="search-form">
+          <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Recherche de films" />
+            <button class="search-button" type="search-button"><i class="fa-solid fa-search"></i></button>
+          </div>
+        </form>
+      </nav>
+    </td>
+  </header>
+
+
+  <main>
+    <h2>Nouveautés <i class="fa-solid fa-film"></i></h2>
+      <div class="posters-container">
+        <div class="poster-container">
+          <a href="movie.html" id="movie-1">
+            <img class="movie-poster-index" src="./assets/img/desert.jpg" alt="Affiche du film Voyage dans le désert">
+            <div class="movie-hover-content">
+              <h3>
+                Voyage dans le désert
+              </h3>
+              <i class="fa fa-5x fa-play"></i>
+            </div>
+          </a>
+        </div>
+
+        <div class="poster-container">
+          <a href="movie.html" id="movie-2">
+          <img class="movie-poster-index" src="./assets/img/cyborg.jpg" alt="Affiche du film Cyborg">
+            <div class="movie-hover-content">
+              <h3>
+                Cyborg
+              </h3>
+              <i class="fa fa-5x fa-play"></i>
+            </div>
+          </a>
+        </div>
+
+        <div class="poster-container">
+          <a href="movie.html" id="movie-3">
+          <img class="movie-poster-index" src="./assets/img/noir.jpg" alt="Affiche du film Les bons vieux jours 2">
+            <div class="movie-hover-content">
+              <h3>
+                Les bons vieux jours 2
+              </h3>
+              <i class="fa fa-5x fa-play"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+
+    <h2>Vos recommandations <i class="fa-solid fa-heart"></i></h2>
+      <div class="posters-container">
+        <div class="poster-container">
+          <a href="movie.html" id="movie-4">
+          <img class="movie-poster-index" src="./assets/img/piano.jpg" alt="Affiche du film Le piano de l'aveugle">
+            <div class="movie-hover-content">
+              <h3>
+                Le piano de l'aveugle
+              </h3>
+              <i class="fa fa-5x fa-play"></i>
+            </div>
+          </a>
+        </div>
+
+        <div class="poster-container" id="movie-5">
+          <a href="movie.html">
+          <img class="movie-poster-index" src="./assets/img/arizona.jpg" alt="Affiche du film Arizona">
+            <div class="movie-hover-content">
+              <h3>
+                Arizona
+              </h3>
+              <i class="fa fa-5x fa-play"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  </body>
+</main>
+
+  <footer>
+    <span id="student-1">Rouleau, Thomas matricule #2221053</span>
+    <span id="student-2">Trahan, Francis matricule #2209296</span>
+  </footer>
+
+</body>
+
+</html>

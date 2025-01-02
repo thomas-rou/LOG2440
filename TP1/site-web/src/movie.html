@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/img/favico.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,600&family=Roboto:ital,wght@0,400;0,500;1,300;1,400;1,500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <title>PolyPlay</title>
+</head>
+
+<body>
+  <header>
+    <td style="display: flex; align-items: center;">
+      <nav id="nav-bar" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./index.html"><img class="header-logo" src="./assets/img/logo-polyflix.png" alt="Logo Polyflix"/></a></li>
+          <li><a href="./admin.html" class="other-pages">Admin</a></li>
+          <li><a href="./about.html" class="other-pages">À propos</a></li>
+        </ul>
+      </nav>
+    </td>
+
+    <td style="text-align: right;">
+      <nav id="nav-search" aria-label="Search Navigation">
+        <form id="search-form">
+          <div class="search-bar"></div>
+            <input type="text" id="search-input" placeholder="Recherche de films" />
+              <button class="search-button" type="search-button"><i class="fa-solid fa-search"></i></button>
+        </form>
+      </nav>
+    </td>
+  </header>
+
+
+  <main>
+    <div class="movie-description-container">
+      <img class="movie-poster" id="'movie-poster" alt="affiche du film" src="./assets/img/cyborg.jpg">
+      <div>
+          <div class="movie-description" id="movie-description">
+            <h1 id="movie-title">Cyborg</h1>
+            <p id="description">Description: Il s'agit d'un film dans un univers futuriste. Un groupe de cyborgs se révolte contre l'humanité.</p>
+            <p id="movie-actors">Acteurs.trices: Margerite Montaigne, Chantale Tremblay, Véronique Bélanger</p>
+            <p id="movie-date">Date de sortie: 21/08/2022</p>
+            <p id="movie-duration">Durée: 2h30</p>
+            <p id="movie-rating">Classification cinématographique: 18A</p>
+          </div>
+      </div>
+    </div>
+    <video id="movie-corr" class="movie-container" controls>
+      <source src="./assets/mp4/video.mp4" type="video/mp4">
+      <track label="English" kind="captions" srclang="en" src="resources/myvideo-en.vtt" default>
+      <track label="Français" kind="captions" srclang="fr" src="resources/myvideo-fr.vtt" default>
+      Your browser does not support the video tag.
+  </video>
+  </main>
+
+
+  <footer>
+    <span id="student-1">Rouleau, Thomas matricule #2221053</span>
+    <span id="student-2">Trahan, Francis matricule #2209296</span>
+  </footer>
+</body>
+
+</html>

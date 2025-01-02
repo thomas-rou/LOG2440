@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/img/favico.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,300;6..12,600&family=Roboto:ital,wght@0,400;0,500;1,300;1,400;1,500&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  <title>PolyPlay</title>
+</head>
+
+<body>
+  <header>
+    <td style="display: flex; align-items: center;">
+      <nav id="nav-bar" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="./index.html"><img class="header-logo" src="./assets/img/logo-polyflix.png" alt="Logo Polyflix"/></a></li>
+          <li><a href="./admin.html" class="current-page">Admin</a></li>
+          <li><a href="./about.html" class="other-pages">À propos</a></li>
+        </ul>
+      </nav>
+    </td>
+
+    <td style="text-align: right;">
+      <nav id="nav-search" aria-label="Search Navigation">
+        <form id="search-form">
+          <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Recherche de films" />
+              <button class="search-button" type="search-button"><i class="fa-solid fa-search"></i></button>
+          </div>
+        </form>
+      </nav>
+    </td>
+  </header>
+
+  <main>
+    <div class="admin-container">
+    <div>
+    <form id="movie-form" enctype="multipart/form-data" method="get">
+      <fieldset>
+      <legend>Informations générales</legend>
+      <!-- Titre -->
+      <label for="name">Nom du film: </label>
+      <input type="text" id="name" required pattern=".*\S+.*">
+      <br><br>
+
+      <!-- Description -->
+      <label for="description">Description: </label>
+      <input type="text" id="description" minlength="10" required>
+      <br><br>
+
+      <!-- Durée -->
+      <label for="duration">Durée (minutes): </label>
+      <input type="number" id="duration" name="duration" min="1" required>
+      <br><br>
+
+      <!-- Date -->
+      <label for="release-date">Date de sortie: </label>
+      <input type="date" id="release-date" name="release-date" required>
+      <br><br>
+
+      <!-- Affiche -->
+      <label for="image">Image: </label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+      <br><br>
+
+      <!-- Film -->
+      <label for="video">Vidéo: </label>
+      <input type="file" id="video" name="video" accept="video/*" required>
+      <br><br>
+
+      <!-- Liste Acteurs.rices -->
+      <div>
+        <label for="actor-input">Act.eurs.rices: </label>
+        <input list="actors-datalist" id="actor-input" type="select">
+        <button class="fa fa-plus" id="add-cast-button"></button>
+      </div>
+      <datalist id="actors-datalist">
+        <option value="Margerite Montaigne">
+        <option value="Chantale Tremblay">
+        <option value="Véronique Bélanger">
+      </datalist>
+      <br>
+
+      <!-- Classification cinématographique -->
+      <label for="movie-rating">Classification cinématographique: </label>
+      <input type="radio" id="rating-g" name="movie-rating" value="G">
+      <label for="rating-g">G</label>
+      <input type="radio" id="rating-pg" name="movie-rating" value="PG">
+      <label for="rating-pg">PG</label>
+      <input type="radio" id="rating-14a" name="movie-rating" value="14A">
+      <label for="rating-14a">14A</label>
+      <input type="radio" id="rating-18a" name="movie-rating" value="18A">
+      <label for="rating-18a">18A</label>
+      <input type="radio" id="rating-R" name="movie-rating" value="14A">
+      <label for="rating-R">R</label>
+      <input type="radio" id="rating-A" name="movie-rating" value="18A">
+      <label for="rating-A">A</label>
+      <br>
+      <p id="actors-list">1. Véronique Bélanger</p>
+    </fieldset>
+  </div>
+
+    <!-- Image de prévisualisation -->
+    <div>
+      <img class="movie-poster" id="img-preview" alt="image par défaut pour la prévisualisation" src="./assets/img/piano.jpg">
+    </div>
+    <!-- Ajout du film -->
+    <div class="line-container">
+      <div class="submit">
+        <input type="submit" value="Ajouter le film" >
+      </div>
+    </div>
+  </form>
+  </div>
+  </main>
+
+  <footer>
+    <span id="student-1">Rouleau, Thomas matricule #2221053</span>
+    <span id="student-2">Trahan, Francis matricule #2209296</span>
+  </footer>
+</body>
+
+</html>
